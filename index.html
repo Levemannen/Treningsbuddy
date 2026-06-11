@@ -1,0 +1,27 @@
+﻿<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a0d10" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" />
+    <link rel="stylesheet" href="./app.css" />
+    <title>Treningsbanken / Min Økt</title>
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div><p class="eyebrow">Treningsbanken</p><h1>Min KT-lag</h1></div>
+        <div class="stats"><span id="monthCount">0 økter / 30d</span><span id="volumeCount">0 kg volum</span></div>
+      </header>
+      <nav class="tabs" id="tabs"></nav>
+      <section class="quick">
+        <div><p class="muted">Rask tilgang</p><h2 id="lastSession">Klar for første logg</h2></div>
+        <div class="buttons"><button class="primary" id="startFavorites">Start favoritter</button><button class="secondary" id="duplicateLast">Dupliser siste</button></div>
+      </section>
+      <section class="grid" id="view"></section>
+    </main>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

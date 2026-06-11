@@ -1,0 +1,20 @@
+{
+  "name": "Treningsbanken / Min Økt",
+  "short_name": "Min Økt",
+  "description": "En statisk treningsbank og øktbygger for styrke, historikk og rask logging.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0d10",
+  "theme_color": "#0a0d10",
+  "categories": ["health", "fitness", "productivity"],
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
