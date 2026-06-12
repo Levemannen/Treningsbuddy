@@ -29,11 +29,15 @@
       .secondary { padding:11px 13px; }
       .icon { width:42px; flex:0 0 42px; }
       .small { width:34px; min-height:34px; flex-basis:34px; }
+      .smallText { min-height:34px; padding:0 10px; font-size:12px; }
       .chipRow,.tags,.buttons,.metaLine { display:flex; flex-wrap:wrap; gap:8px; }
       .chip { padding:0 12px; }
       .pill,.tag { display:inline-flex; align-items:center; min-height:26px; border:1px solid var(--line); border-radius:999px; color:var(--muted); background:rgba(255,255,255,.04); padding:5px 9px; font-size:12px; font-weight:800; }
       .list { display:grid; gap:8px; }
       .historyRow,.bankLine,.builderLine,.setRow { border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.035); padding:10px; }
+      .clickableRow { align-items:center; }
+      .clickableRow .textButton { text-align:left; }
+      .exerciseName { color:var(--text); font-size:15px; min-height:0; }
       .bankLine { display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; }
       .builderLine { display:grid; gap:10px; }
       .setRow { display:grid; grid-template-columns:28px 1fr 1fr auto auto; align-items:end; gap:8px; }
@@ -43,12 +47,18 @@
       input[type="checkbox"] { width:18px; min-height:18px; accent-color:var(--accent); }
       textarea { min-height:70px; resize:vertical; }
       input:focus,textarea:focus,select:focus { border-color:var(--accent); }
-      .meta,.records,.adviceGrid,.progressionGrid,.sessionMeta,.historyControls { display:grid; gap:8px; color:var(--muted); font-size:13px; }
+      .meta,.records,.adviceGrid,.progressionGrid,.profileGrid,.sessionMeta,.historyControls { display:grid; gap:8px; color:var(--muted); font-size:13px; }
+      .filterGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .filterGrid input { grid-column:1/-1; }
       .records { grid-template-columns:repeat(2,minmax(0,1fr)); font-weight:800; }
       .progressionGrid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .techniqueImage { width:100%; aspect-ratio:2/1; object-fit:cover; border:1px solid var(--line); border-radius:8px; background:#0e1216; }
       .stepList { margin:8px 0 0; padding-left:20px; color:var(--muted); }
       .stepList li + li { margin-top:4px; }
+      .compactList { margin:8px 0 0; padding-left:18px; color:var(--muted); }
+      .compactList li + li { margin-top:4px; }
+      .profileGrid section { border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.025); padding:10px; }
+      .detailPanel { max-width:860px; margin:0 auto; }
+      .cue { color:var(--text); border-color:rgba(141,224,111,.45); }
       .spark { height:54px; display:grid; grid-template-columns:repeat(8,minmax(5px,1fr)); align-items:end; gap:4px; border:1px solid var(--line); border-radius:8px; padding:8px; background:#0e1216; }
       .spark span { min-height:6px; border-radius:999px 999px 2px 2px; background:linear-gradient(180deg,var(--accent),var(--blue)); }
       .empty { color:var(--muted); border:1px dashed var(--line); border-radius:8px; padding:18px; text-align:center; }
@@ -56,7 +66,8 @@
       .advice { border-left:3px solid var(--accent); padding:8px 10px; background:rgba(141,224,111,.08); border-radius:0 8px 8px 0; }
       .sessionMeta { grid-template-columns:repeat(4,minmax(0,1fr)); }
       .historyControls { grid-template-columns:1fr 180px; }
-      @media (max-width:560px) { .topbar,.quick,.section,.cardTop { align-items:stretch; flex-direction:column; } .quick .primary,.section .secondary { width:100%; } .setRow { grid-template-columns:24px 1fr 1fr; } .sessionMeta,.historyControls,.records,.progressionGrid { grid-template-columns:1fr; } }
+      @media (max-width:560px) { .topbar,.quick,.section,.cardTop { align-items:stretch; flex-direction:column; } .quick .primary,.section .secondary { width:100%; } .setRow { grid-template-columns:24px 1fr 1fr; } .sessionMeta,.historyControls,.records,.progressionGrid,.filterGrid { grid-template-columns:1fr; } }
       @media (min-width:760px) { .cards { grid-template-columns:repeat(2,minmax(0,1fr)); } }
       @media (min-width:1040px) { .cards.three { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+
 
