@@ -1,7 +1,7 @@
-{
-  "name": "Treningsbanken / Min Økt",
-  "short_name": "Min Økt",
-  "description": "En statisk treningsbank og øktbygger for styrke, historikk og rask logging.",
+﻿{
+  "name": "treningsbuddy",
+  "short_name": "treningsbuddy",
+  "description": "En statisk treningsapp og øktbygger for styrke, historikk og rask logging.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

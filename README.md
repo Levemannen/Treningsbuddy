@@ -1,10 +1,10 @@
-# Treningsbanken / Min Økt
+# treningsbuddy
 
 Dette er en statisk treningsapp som kan lastes opp manuelt i GitHub-nettleseren og publiseres med GitHub Pages uten npm, Next, Vite, React-build eller lokal server.
 
 ## Filer du skal laste opp til GitHub
 
-Last opp disse filene fra hovedmappen:
+Last opp disse filene direkte i hovedmappen/root i GitHub-repositoryet:
 
 - `index.html`
 - `app.js`
@@ -14,7 +14,7 @@ Last opp disse filene fra hovedmappen:
 - `sw.js`
 - `README.md`
 
-`_backup/` trenger du ikke laste opp. Den inneholder gamle/overflødige prosjektfiler som er tatt vare på.
+`_backup/` trenger du ikke laste opp. Den inneholder gamle eller overflødige prosjektfiler som er tatt vare på.
 
 ## Åpne appen lokalt
 
@@ -33,14 +33,16 @@ Appen lagrer økter, historikk, notater og ukeplan i nettleserens lokale lagring
 7. Velg publiseringsmappe `/root`.
 8. Lagre.
 
-GitHub Pages bruker `index.html` øverst i hovedmappen som inngang til appen.
+GitHub Pages skal publisere fra hovedmappen/root. `index.html` må ligge øverst i hovedmappen.
 
 ## Viktig
 
-Alle appens nødvendige filer ligger direkte i hovedmappen. Filstiene er relative:
+Alle nødvendige appfiler ligger direkte i hovedmappen. Filstiene er relative:
 
 - `./app.js`
 - `./app.css`
 - `./icon.svg`
+- `./manifest.webmanifest`
+- `./sw.js`
 
-Det brukes ingen absolutte lokale filbaner.
+Det brukes ingen absolutte lokale filbaner, og appen trenger ikke npm, build-verktøy eller lokal server.

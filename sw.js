@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = "treningsbanken-flat-v1";
+﻿const CACHE_NAME = "treningsbuddy-flat-v7";
 const APP_SHELL = ["./", "./index.html", "./app.css", "./app.js", "./icon.svg", "./manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
@@ -35,3 +35,13 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
+
+
+
+
+
+
+
+
+
