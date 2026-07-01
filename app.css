@@ -1,4 +1,4 @@
-﻿:root { color-scheme: dark; --bg:#0a0d10; --panel:#14181d; --strong:#1b2027; --line:#2b333d; --text:#f6f7f2; --muted:#a8b0b7; --accent:#8de06f; --ink:#091007; --blue:#78b7ff; }
+:root { color-scheme: dark; --bg:#0a0d10; --panel:#14181d; --strong:#1b2027; --line:#2b333d; --text:#f6f7f2; --muted:#a8b0b7; --accent:#8de06f; --ink:#091007; --blue:#78b7ff; }
       * { box-sizing:border-box; }
       body { margin:0; min-height:100vh; background:linear-gradient(180deg,rgba(141,224,111,.08),transparent 220px),var(--bg); color:var(--text); font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
       button,input,textarea,select { font:inherit; }
@@ -111,6 +111,8 @@
       .commonTimerSettings { display:grid; gap:12px; border:1px solid rgba(120,183,255,.5); border-radius:8px; background:rgba(120,183,255,.07); padding:12px; }
       .randomWorkoutRow { display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap; }
       .randomCountChoices { display:flex; gap:6px; }
+      .setCountControls { display:flex; align-items:center; gap:10px; margin-top:8px; }
+      .setCountControls .icon { width:40px; height:40px; min-height:40px; padding:0; font-size:22px; }
       .exerciseActions { justify-content:center; }
       .swapPanel { display:grid; gap:10px; text-align:left; border:1px solid rgba(120,183,255,.5); border-radius:8px; background:#101820; padding:12px; }
       .swapList { display:grid; gap:8px; max-height:48vh; overflow:auto; }
