@@ -8,6 +8,8 @@
       h2 { font-size:19px; }
       h3 { font-size:15px; line-height:1.25; }
       .app { width:min(100%,1120px); margin:0 auto; padding:14px 12px 40px; }
+      .globalHome { position:fixed; top:10px; left:10px; z-index:50; min-height:42px; border-radius:8px; color:var(--text); background:#151b20; border:1px solid var(--line); padding:0 13px; font-weight:900; box-shadow:0 8px 24px rgba(0,0,0,.3); cursor:pointer; }
+      .topbar { padding-left:74px; }
       .topbar,.quick,.section,.cardTop,.historyRow,.builderHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
       .topbar { padding:6px 2px 14px; }
       .eyebrow { color:var(--accent); font-size:12px; font-weight:900; text-transform:uppercase; }
@@ -106,6 +108,9 @@
       .strengthMode { display:grid; gap:4px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.035); padding:14px; }
       .strengthMode span { color:var(--muted); font-size:13px; }
       .soundPicker { display:grid; gap:10px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.03); padding:12px; }
+      .commonTimerSettings { display:grid; gap:12px; border:1px solid rgba(120,183,255,.5); border-radius:8px; background:rgba(120,183,255,.07); padding:12px; }
+      .randomWorkoutRow { display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap; }
+      .randomCountChoices { display:flex; gap:6px; }
       .exerciseActions { justify-content:center; }
       .swapPanel { display:grid; gap:10px; text-align:left; border:1px solid rgba(120,183,255,.5); border-radius:8px; background:#101820; padding:12px; }
       .swapList { display:grid; gap:8px; max-height:48vh; overflow:auto; }
@@ -123,7 +128,7 @@
 
       body.focusModeActive { background:#050708; }
       body.focusModeActive .topbar, body.focusModeActive .tabs, body.focusModeActive .quick { display:none; }
-      body.focusModeActive .app { max-width:760px; padding:10px 10px 28px; }
+      body.focusModeActive .app { max-width:760px; padding:62px 10px 28px; }
       .focusScreen { display:grid; gap:14px; min-height:calc(100vh - 24px); border-color:rgba(141,224,111,.58); background:linear-gradient(180deg,rgba(141,224,111,.08),rgba(10,13,16,.98) 220px); }
       .focusTop { display:flex; align-items:center; justify-content:space-between; gap:10px; color:var(--muted); font-size:13px; font-weight:900; }
       .focusHero { display:grid; gap:8px; text-align:center; padding:8px 0 2px; }
@@ -145,4 +150,4 @@
       .minimalFocus { place-content:center; text-align:center; }
       .minimalFocus .focusCue { display:grid; gap:6px; border:1px solid var(--line); border-radius:8px; padding:12px; background:rgba(255,255,255,.035); }
       .templateCard .historyRow { grid-template-columns:1fr auto; }
-      @media (max-width:560px) { .focusTop { align-items:stretch; flex-direction:column; } .focusBottom { display:grid; grid-template-columns:1fr; } .focusBottom .primary, .focusBottom .secondary { width:100%; min-height:50px; } .focusScreen .sessionMeta { grid-template-columns:1fr; } }
+      @media (max-width:560px) { .globalHome { top:8px; left:8px; } .topbar { padding-top:48px; padding-left:2px; } .randomWorkoutRow .secondary { width:100%; } .focusTop { align-items:stretch; flex-direction:column; } .focusBottom { display:grid; grid-template-columns:1fr; } .focusBottom .primary, .focusBottom .secondary { width:100%; min-height:50px; } .focusScreen .sessionMeta { grid-template-columns:1fr; } }
