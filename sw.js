@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = "treningsbuddy-flat-v7";
+const CACHE_NAME = "treningsbuddy-flat-v27";
 const APP_SHELL = ["./", "./index.html", "./app.css", "./app.js", "./icon.svg", "./manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
@@ -22,6 +22,21 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
+  const url = new URL(event.request.url);
+  const isAppFile = ["index.html", "app.js", "app.css", "sw.js"].some((file) => url.pathname.endsWith(file)) || url.pathname.endsWith("/");
+  if (isAppFile) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((cached) => cached || caches.match("./index.html")))
+    );
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
@@ -35,13 +50,3 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
-
-
-
-
-
-
-
-
-
-
