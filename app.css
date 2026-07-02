@@ -191,3 +191,28 @@
       @media (max-width:560px) { .globalHome { top:8px; left:8px; } .topbar { padding-top:48px; padding-left:2px; } .randomWorkoutRow .secondary { width:100%; } .focusTop { align-items:stretch; flex-direction:column; } .focusBottom { display:grid; grid-template-columns:1fr; } .focusBottom .primary, .focusBottom .secondary { width:100%; min-height:50px; } .focusScreen .sessionMeta { grid-template-columns:1fr; } }
 
 @media (max-width:560px) { .favoriteEditRow { grid-template-columns:28px minmax(0,1fr); align-items:start; } .editActions { grid-column:2; flex-wrap:wrap; } .editAddRow { grid-template-columns:1fr; } .editSaveActions .primary,.editSaveActions .secondary { flex:1 1 100%; } }
+.settingsStack { display:grid; gap:12px; }
+.settingsGroup { display:grid; gap:16px; }
+.settingRow,.volumeSetting>span { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.segmented { display:flex; gap:6px; }
+.volumeSetting { display:grid; gap:8px; }
+.volumeSetting output { color:var(--accent); font-weight:900; }
+.toggleSetting { display:grid; grid-template-columns:auto 1fr; align-items:center; gap:10px; cursor:pointer; }
+.toggleSetting input { width:22px; min-height:22px; accent-color:var(--accent); }
+.toggleSetting span { display:grid; gap:3px; }
+.toggleSetting small { color:var(--muted); }
+body.lightMode { color-scheme:light; --bg:#f4f6f3; --panel:#ffffff; --strong:#edf1ec; --line:#c9d2c9; --text:#172019; --muted:#5c685f; background:linear-gradient(180deg,rgba(91,163,68,.09),transparent 220px),var(--bg); }
+body.lightMode .quick,body.lightMode .panel { background:rgba(255,255,255,.97); box-shadow:0 12px 30px rgba(28,45,31,.1); }
+body.lightMode .tab,body.lightMode .globalHome { background:#fff; }
+body.lightMode input,body.lightMode textarea,body.lightMode select { background:#fff; color:var(--text); }
+body.lightMode .exercisePick,body.lightMode .historyRow,body.lightMode .bankLine,body.lightMode .builderLine,body.lightMode .setRow,body.lightMode .favoriteEditRow,body.lightMode .focusBlock { background:rgba(20,45,25,.035); }
+body.lightMode .focusScreen { background:linear-gradient(180deg,rgba(91,163,68,.1),rgba(255,255,255,.98) 220px); }
+body.lightMode .focusBottom,body.lightMode .editSaveActions { background:rgba(255,255,255,.94); }
+@media (max-width:560px) { .settingRow { align-items:flex-start; flex-direction:column; } .segmented { width:100%; } .segmented .chip { flex:1; } }.commonSetControls { display:grid; gap:10px; border:1px solid rgba(141,224,111,.42); border-radius:8px; background:rgba(141,224,111,.07); padding:12px; }
+.commonSetChoices { display:flex; flex-wrap:wrap; align-items:end; gap:7px; }
+.customSetChoice { display:grid; gap:4px; min-width:112px; color:var(--muted); font-size:12px; font-weight:800; }
+.customSetChoice input { width:112px; }
+body.lightMode .commonSetControls { background:rgba(91,163,68,.08); }
+@media (max-width:560px) { .commonSetChoices .chip { flex:1 1 42px; } .customSetChoice { flex:1 1 112px; } }
+.commonSetConfirm { display:flex; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid rgba(141,224,111,.35); padding-top:10px; }
+@media (max-width:560px) { .commonSetConfirm { align-items:stretch; flex-direction:column; } }
