@@ -29,6 +29,18 @@
       .homeChoice span,.flowChoice span { display:block; font-size:22px; line-height:1.1; }
       .homeChoice small,.flowChoice small { color:inherit; opacity:.76; font-size:13px; font-weight:800; }
       .flowChoice { color:var(--text); cursor:pointer; }
+      .compactFlowGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+      .compactFlowChoice { min-height:58px; align-items:center; justify-content:center; padding:10px; text-align:center; }
+      .compactFlowChoice span { font-size:16px; line-height:1.15; }
+      .favoriteEditList { display:grid; gap:8px; }
+      .favoriteEditRow { display:grid; grid-template-columns:32px minmax(0,1fr) auto; gap:10px; align-items:center; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.035); padding:10px; }
+      .editOrder { display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:var(--strong); color:var(--muted); font-weight:900; }
+      .editExercise { display:grid; gap:8px; min-width:0; }
+      .editExercise label { display:grid; gap:4px; color:var(--muted); font-size:12px; font-weight:800; }
+      .editActions { display:flex; gap:6px; align-items:center; }
+      .editAddExercise { display:grid; gap:8px; border-top:1px solid var(--line); padding-top:12px; }
+      .editAddRow { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
+      .editSaveActions { position:sticky; bottom:8px; padding:8px; border:1px solid var(--line); border-radius:8px; background:rgba(10,13,16,.94); }
       .timerChoiceGrid { grid-template-columns:repeat(3,minmax(0,1fr)); }
       .muted { color:var(--muted); }
       .primary,.secondary,.icon { display:inline-flex; align-items:center; justify-content:center; gap:8px; }
@@ -177,3 +189,5 @@
       .minimalFocus .focusCue { display:grid; gap:6px; border:1px solid var(--line); border-radius:8px; padding:12px; background:rgba(255,255,255,.035); }
       .templateCard .historyRow { grid-template-columns:1fr auto; }
       @media (max-width:560px) { .globalHome { top:8px; left:8px; } .topbar { padding-top:48px; padding-left:2px; } .randomWorkoutRow .secondary { width:100%; } .focusTop { align-items:stretch; flex-direction:column; } .focusBottom { display:grid; grid-template-columns:1fr; } .focusBottom .primary, .focusBottom .secondary { width:100%; min-height:50px; } .focusScreen .sessionMeta { grid-template-columns:1fr; } }
+
+@media (max-width:560px) { .favoriteEditRow { grid-template-columns:28px minmax(0,1fr); align-items:start; } .editActions { grid-column:2; flex-wrap:wrap; } .editAddRow { grid-template-columns:1fr; } .editSaveActions .primary,.editSaveActions .secondary { flex:1 1 100%; } }
