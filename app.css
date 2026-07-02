@@ -79,7 +79,7 @@
       .selectedExerciseMain .exerciseName { max-width:100%; text-align:left; overflow-wrap:anywhere; }
       .selectedExerciseMain .setCountControls { margin:0; gap:5px; white-space:nowrap; }
       .selectedExerciseMain .setCountControls .icon { width:34px; height:34px; min-height:34px; flex-basis:34px; font-size:19px; }
-      .selectedExerciseMain .setCountControls strong { min-width:42px; color:var(--muted); font-size:12px; text-align:center; }
+      .selectedExerciseMain .setCountControls strong { display:inline-block; min-width:52px; color:var(--muted); font-size:12px; line-height:1; text-align:center; white-space:nowrap; }
       .selectedExerciseActions { display:grid; grid-template-columns:minmax(82px,1fr) 34px 34px auto; align-items:center; gap:6px; }
       .selectedExerciseActions .compactAction { width:34px; height:34px; min-height:34px; flex-basis:34px; padding:0; font-size:17px; }
       .removeAction { min-height:34px; color:var(--muted); background:transparent; padding:0 7px; font-size:12px; font-weight:800; cursor:pointer; }
