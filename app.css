@@ -73,6 +73,17 @@
       .exerciseName { color:var(--text); font-size:15px; min-height:0; }
       .bankLine { display:grid; grid-template-columns:1fr auto; align-items:center; gap:10px; }
       .builderLine { display:grid; gap:10px; }
+      .selectedExerciseCard { gap:8px; padding:10px 11px; }
+      .selectedExerciseMain { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:10px; min-width:0; }
+      .selectedExerciseMain h3 { min-width:0; }
+      .selectedExerciseMain .exerciseName { max-width:100%; text-align:left; overflow-wrap:anywhere; }
+      .selectedExerciseMain .setCountControls { margin:0; gap:5px; white-space:nowrap; }
+      .selectedExerciseMain .setCountControls .icon { width:34px; height:34px; min-height:34px; flex-basis:34px; font-size:19px; }
+      .selectedExerciseMain .setCountControls strong { min-width:42px; color:var(--muted); font-size:12px; text-align:center; }
+      .selectedExerciseActions { display:grid; grid-template-columns:minmax(82px,1fr) 34px 34px auto; align-items:center; gap:6px; }
+      .selectedExerciseActions .compactAction { width:34px; height:34px; min-height:34px; flex-basis:34px; padding:0; font-size:17px; }
+      .removeAction { min-height:34px; color:var(--muted); background:transparent; padding:0 7px; font-size:12px; font-weight:800; cursor:pointer; }
+      .removeAction:hover,.removeAction:focus { color:#ffb4ac; background:rgba(255,120,105,.08); border-radius:8px; }
       .setRow { display:grid; grid-template-columns:28px 1fr 1fr auto auto; align-items:end; gap:8px; }
       .setNo { min-height:44px; display:grid; place-items:center; color:var(--muted); font-weight:900; }
       label { display:grid; gap:5px; color:var(--muted); font-size:12px; font-weight:900; }
@@ -237,3 +248,5 @@ body.lightMode .guidedPreview span,body.lightMode .completionStats span { backgr
 @media (max-width:560px) { .stageChoiceButtons { grid-template-columns:1fr; } .completionStats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .timerStepPanel { max-width:680px; margin:0 auto; }
 .timerStepPanel > .primary { width:100%; min-height:52px; }
+
+@media (max-width:380px) { .selectedExerciseMain { grid-template-columns:1fr; } .selectedExerciseMain .setCountControls { justify-content:flex-start; } }
