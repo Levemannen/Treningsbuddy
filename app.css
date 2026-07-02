@@ -297,3 +297,18 @@ body.lightMode .homeMenuPrimary .homeMenuCopy small { color:rgba(7,16,7,.7); }
 
 .globalHome { display:inline-flex; align-items:center; gap:8px; }
 .startPlay { width:19px; height:19px; fill:none; stroke:var(--accent); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+.selectedExerciseList { display:grid; gap:8px; }
+.selectedExerciseCard { position:relative; touch-action:none; user-select:none; cursor:grab; transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,opacity .18s ease; }
+.selectedExerciseHeader { display:grid; grid-template-columns:minmax(0,1fr) 36px; align-items:center; gap:10px; }
+.selectedExerciseHeader h3 { min-width:0; }
+.selectedExerciseHeader .exerciseName { max-width:100%; overflow-wrap:anywhere; text-align:left; }
+.selectedExerciseActions { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.selectedExerciseActions .setCountControls { margin:0; }
+.selectedExerciseActions .techniqueAction { margin-left:auto; }
+.trashAction { width:36px; height:36px; display:grid; place-items:center; padding:0; border-radius:8px; }
+.trashAction svg { width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.selectedExerciseCard.isDragging { cursor:grabbing; transform:scale(1.02); border-color:rgba(141,224,111,.72); background:#1a2025; box-shadow:0 18px 42px rgba(0,0,0,.48); opacity:.98; }
+.dragPlaceholder { border:1px dashed rgba(141,224,111,.55); border-radius:8px; background:rgba(141,224,111,.07); transition:height .18s ease,transform .18s ease; }
+body.lightMode .selectedExerciseCard.isDragging { background:#fff; box-shadow:0 18px 38px rgba(28,45,31,.2); }
+@media (max-width:380px) { .selectedExerciseActions { gap:6px; } .selectedExerciseActions .setCountControls { gap:4px; } }

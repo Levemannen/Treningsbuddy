@@ -1,4 +1,4 @@
-const CACHE_NAME = "treningsbuddy-flat-v86";
+const CACHE_NAME = "treningsbuddy-flat-v91";
 const APP_SHELL = ["./", "./index.html", "./app.css", "./app.js", "./icon.svg", "./manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
