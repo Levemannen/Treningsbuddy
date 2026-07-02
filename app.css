@@ -49,6 +49,7 @@
       .builderSummary,.addedNotice { border:1px solid rgba(120,183,255,.45); border-radius:8px; background:rgba(120,183,255,.08); color:var(--text); padding:10px; font-size:13px; font-weight:800; }
       .addedNotice { border-color:rgba(141,224,111,.55); background:rgba(141,224,111,.1); }
       .newWorkoutPanel { border-color:rgba(120,183,255,.55); }
+      .newWorkoutPanel:focus { outline:2px solid var(--accent); outline-offset:2px; }
       .activeWorkoutPanel { border-color:rgba(141,224,111,.75); background:rgba(20,29,22,.96); }
       .historyRow,.bankLine,.builderLine,.setRow { border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.035); padding:10px; }
       .clickableRow { align-items:center; }
@@ -74,6 +75,17 @@
       .compactList li + li { margin-top:4px; }
       .profileGrid section { border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.025); padding:10px; }
       .detailPanel { max-width:860px; margin:0 auto; }
+      .detailPanel > h2 { margin:0 0 4px; font-size:26px; }
+      .techniqueGuide { display:grid; }
+      .techniqueGuide section { padding:14px 0; border-bottom:1px solid var(--line); }
+      .techniqueGuide section:last-child { border-bottom:0; }
+      .techniqueGuide h3 { margin:0 0 8px; font-size:16px; }
+      .techniqueGuide p { margin:0; color:var(--muted); line-height:1.55; }
+      .techniqueSteps { padding-top:10px; }
+      .techniqueSteps .stepList { color:var(--text); font-size:15px; line-height:1.5; }
+      .techniqueGuide textarea { min-height:88px; }
+      .youtubeSearchButton { display:inline-flex; width:auto; }
+      .repsCompact { display:grid; gap:6px; margin-bottom:10px; color:var(--muted); font-size:14px; }
       .videoPanel { display:grid; gap:10px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.03); padding:12px; }
       .videoEmbed { width:100%; aspect-ratio:16/9; border:0; border-radius:8px; background:#0e1216; }
       .favoriteCard { border-color:rgba(141,224,111,.65); }
@@ -111,6 +123,10 @@
       .commonTimerSettings { display:grid; gap:12px; border:1px solid rgba(120,183,255,.5); border-radius:8px; background:rgba(120,183,255,.07); padding:12px; }
       .randomWorkoutRow { display:flex; align-items:center; justify-content:flex-end; gap:10px; flex-wrap:wrap; }
       .randomCountChoices { display:flex; gap:6px; }
+      .builderTopActions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+      .builderTopActions button { min-height:50px; }
+      .randomChoicePanel { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 0; border-bottom:1px solid var(--line); }
+      .builderFilters { padding:10px 0; border-bottom:1px solid var(--line); }
       .setCountControls { display:flex; align-items:center; gap:10px; margin-top:8px; }
       .setCountControls .icon { width:40px; height:40px; min-height:40px; padding:0; font-size:22px; }
       .exerciseActions { justify-content:center; }
@@ -137,6 +153,14 @@
       .focusHero h1, .minimalFocus h1 { font-size:clamp(38px,10vw,76px); line-height:1; letter-spacing:0; overflow-wrap:anywhere; }
       .focusHero .exerciseName { color:var(--text); font-size:inherit; margin:0 auto; }
       .focusInfo { display:grid; gap:12px; text-align:center; border:1px solid rgba(255,255,255,.08); border-radius:8px; background:rgba(255,255,255,.035); padding:14px; }
+      .focusPrimary { width:100%; min-height:58px; font-size:17px; }
+      .setProgress { display:grid; grid-template-columns:repeat(auto-fit,minmax(24px,1fr)); gap:7px; }
+      .setProgress span { height:7px; border-radius:4px; background:var(--line); }
+      .setProgress span.done { background:var(--accent); }
+      .nextExercise { display:grid; gap:4px; border-top:1px solid var(--line); padding-top:12px; }
+      .nextExercise span,.nextExercise small { color:var(--muted); }
+      .focusSecondary { display:grid; grid-template-columns:1fr auto; gap:8px; }
+      .focusMore { display:grid; gap:10px; border-top:1px solid var(--line); padding-top:10px; }
       .timerFocus { background:rgba(141,224,111,.045); }
       .setCheckRow { display:grid; grid-template-columns:repeat(auto-fit,minmax(48px,1fr)); gap:8px; }
       .setCheck { min-height:48px; border-radius:8px; background:var(--strong); border:1px solid var(--line); color:var(--text); font-weight:1000; }
