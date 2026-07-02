@@ -26,6 +26,13 @@
       .grid { display:grid; gap:12px; }
       .cards { display:grid; grid-template-columns:1fr; gap:12px; }
       .homeHero,.flowGrid,.timerChoiceGrid { display:grid; gap:12px; }
+      .homeDashboard { display:grid; gap:12px; }
+      .homeChoice.homeSecondaryChoice { min-height:86px; }
+      .homeTools { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+      .homeTool { display:flex; min-height:72px; flex-direction:column; align-items:flex-start; justify-content:center; gap:5px; color:var(--text); text-align:left; cursor:pointer; }
+      .homeTool span,.homeChoice.homeSettingsChoice span { font-size:16px; font-weight:900; }
+      .homeTool small,.homeChoice.homeSettingsChoice small { color:var(--muted); font-size:12px; font-weight:800; }
+      .homeChoice.homeSettingsChoice { min-height:64px; padding:14px 18px; }
       .homeChoice,.flowChoice { width:100%; min-height:132px; align-items:flex-start; flex-direction:column; text-align:left; padding:18px; }
       .homeChoice span,.flowChoice span { display:block; font-size:22px; line-height:1.1; }
       .homeChoice small,.flowChoice small { color:inherit; opacity:.76; font-size:13px; font-weight:800; }
@@ -250,3 +257,10 @@ body.lightMode .guidedPreview span,body.lightMode .completionStats span { backgr
 .timerStepPanel > .primary { width:100%; min-height:52px; }
 
 @media (max-width:380px) { .selectedExerciseMain { grid-template-columns:1fr; } .selectedExerciseMain .setCountControls { justify-content:flex-start; } }
+
+.compactTemplateCard { align-content:start; }
+.templateMeta { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.templateExerciseDetails { border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:8px 0; }
+.templateExerciseDetails summary { color:var(--accent); font-weight:900; cursor:pointer; list-style-position:inside; }
+.templateExerciseDetails[open] summary { margin-bottom:8px; }
+@media (max-width:560px) { .templateMeta { grid-template-columns:1fr 1fr; } .templateMeta span:last-child { grid-column:1/-1; } }
