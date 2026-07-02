@@ -1,4 +1,4 @@
-const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["tabata","Tabata"],["core","Core"],["kroppsvekt","Kroppsvekt"],["morgen","Morgen"],["toying","Tøying"],["nodokt","Nødøkt"],["bank","Øvelser"],["builder","Bygger"],["history","Historikk"]];
+const tabs = [["home","Start"],["bank","Øvelser"],["history","Historikk"]];
       const favorites = ["Deadlift","Landmine Press","Stangroing","Frontbøy","Floor Press","Inverted Rows","Pushups","Push Press","Shrugs","Bicepscurl","Triceps Extension","Planke/Rollout"];
       const equipment = ["Kroppsvekt","Manualer","Stang","Kabel","Maskin","Kettlebell","Strikk","TRX/slynger","Smith-maskin","Landmine","Medisinball","Annet","Benk","Pullupstang"];
       const groups = {
@@ -76,6 +76,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       state.favoriteTemplates = state.favoriteTemplates || [];
       state.savedPrograms = state.savedPrograms || [];
       if(state.tab==="builder"&&state.builderMode!=="active"){state.tab="home";state.builder=[];state.builderStep="category";state.builderName="Ny økt";state.justAdded="";}
+      if(!["home","bank","history","builder","detail","favworkouts"].includes(state.tab))state.tab="home";
       state.removedFavorites = state.removedFavorites || [];
       state.exerciseVideos = state.exerciseVideos || {};
       state.youtubeSearches = state.youtubeSearches || {};
@@ -152,7 +153,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       const suggestion = e => { const last=lastEntries(e.name)[0]; return last?`Sist brukt: ${new Date(last.date).toLocaleDateString("no")} · ${format(last)}`:"Fokuser på god teknikk og jevn flyt."; };
       const poolFor = cat => [...new Set(Object.values(groups[cat==="tabata"?"kroppsvekt":cat]||{}).flat().concat(templates.filter(t=>t.cat===(cat==="tabata"?"kroppsvekt":cat)).flatMap(t=>t.ex.map(x=>x[0]))))].sort((a,b)=>a.localeCompare(b,"no"));
       const categoryOptions = [["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["kroppsvekt","Kroppsvekt"],["morgen","Morgentrening"],["toying","Tøying"],["core","Core"]];
-      const flowOptions = [["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["tabata","Tabata"],["core","Core"],["kroppsvekt","Kroppsvekt"],["toying","Tøying"]];
+      const flowOptions = [["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["kroppsvekt","Kroppsvekt"],["tabata","Tabata"],["core","Core"],["morgen","Morgentrening"],["toying","Tøying"],["nodokt","Nødøkt"]];
       const intervalCategories = ["crosstrening","kroppsvekt","tabata","toying"];
       const hasIntervalTimer = cat => intervalCategories.includes(cat);
       const timerSoundOptions = [["soft-bell","Myk klokke"],["warm-gong","Varm gong"],["soft-click","Diskret klikk"],["none","Ingen lyd"]];
@@ -160,12 +161,43 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       const soundLabels = {work:"Start arbeid",rest:"Start hvile",countdown:"Nedtelling",complete:"Økt ferdig",warning:"Varsel"};
       const soundPickerHtml = () => `<div class="soundPicker"><div class="cardTop"><div><strong>Lydsignal</strong><p class="muted">Bruk egne lydfiler i sounds/, eller varm innebygd lyd hvis filen mangler.</p></div></div><div class="buttons">${timerSoundOptions.map(([id,label])=>`<button class="chip ${state.timerSound===id?"active":""}" data-sound-choice="${id}">${label}</button>`).join("")}</div><div class="buttons">${volumeOptions.map(([id,label])=>`<button class="chip ${state.timerVolume===id?"active":""}" data-volume-choice="${id}">${label}</button>`).join("")}</div><div class="buttons">${Object.entries(soundLabels).map(([id,label])=>`<button class="secondary smallText" data-preview-sound="${id}">Test ${label}</button>`).join("")}</div></div>`;
       const flowLabel = id => (flowOptions.find(x=>x[0]===id)||categoryOptions.find(x=>x[0]===id)||["","Egen"])[1];
-      const setFlowCategory = cat => { state.builderPickCat=cat; state.builderCat=cat; state.builderName=`Ny ${flowLabel(cat)}-økt`; state.builder=[]; state.builderSearch=""; state.builderStep="exercises"; state.timerChoice=cat==="tabata"?"tabata":hasIntervalTimer(cat)?"interval":"none";if(cat==="tabata"){state.globalWork=20;state.globalPause=10;state.globalRounds=8;}if(cat==="toying"){state.globalWork=45;state.globalPause=10;state.globalRounds=1;} save(); render(); };
-      const startNewWorkoutFlow = () => { state.builder=[]; state.builderName="Ny økt"; state.builderStep="category"; state.builderMode="build"; state.tab="builder"; state.justAdded=""; state.editingProgramId=null; save(); render(); };
+      const setFlowCategory = cat => { state.builderPickCat=cat; state.builderCat=cat; state.builderName=`Ny ${flowLabel(cat)}-økt`; state.builder=[]; state.builderSearch=""; state.builderMuscle=""; state.builderEquipment=""; state.builderLevel=""; state.builderStep="exercises"; state.timerChoice=cat==="tabata"?"tabata":hasIntervalTimer(cat)?"interval":"none";if(cat==="tabata"){state.globalWork=20;state.globalPause=10;state.globalRounds=8;}if(cat==="toying"){state.globalWork=45;state.globalPause=10;state.globalRounds=1;} save(); render(); };
+      const startNewWorkoutFlow = () => { state.builder=[]; state.builderName="Ny økt"; state.builderSearch=""; state.builderMuscle=""; state.builderEquipment=""; state.builderLevel=""; state.builderStep="category"; state.builderMode="build"; state.tab="builder"; state.justAdded=""; state.editingProgramId=null; save(); render(); };
       const startSavedWorkout = p => {state.builderName=p.name;state.builderCat=p.cat||"favoritt";state.builderPickCat=p.cat||"favoritt";state.builder=p.ex.map(e=>({...e,setCount:p.cat==="toying"?setCountOf(e):setCountOf(e)===1?3:setCountOf(e),targetReps:e.targetReps||e.reps||""}));state.timerChoice=p.timerChoice||"none";state.pauseBetween=p.pauseBetween||0;state.builderStep="timer";state.builderMode="build";state.tab="builder";save();render();};
       const templateProgram = t => {const timerChoice=t.cat==="tabata"?"tabata":hasIntervalTimer(t.cat)?"interval":"none";const work=t.cat==="tabata"?20:t.cat==="toying"?45:40;const pause=t.cat==="tabata"?10:10;const rounds=t.cat==="tabata"?8:t.cat==="toying"?1:3;return {id:crypto.randomUUID(),sourceTemplateId:t.id,name:t.name,cat:t.cat,ex:t.ex.map(x=>({...entry(x[0],Number(x[1])||3,x[2]||""),work,pause,rounds})),timerChoice,pauseBetween:0,duration:t.duration,date:new Date().toISOString()};};
       const toggleTemplateFavorite = id => {state.favoriteTemplates=state.favoriteTemplates||[];state.savedPrograms=state.savedPrograms||[];const exists=state.favoriteTemplates.includes(id),t=templates.find(x=>x.id===id);if(exists){state.favoriteTemplates=state.favoriteTemplates.filter(x=>x!==id);state.savedPrograms=state.savedPrograms.filter(x=>x.sourceTemplateId!==id);}else if(t){state.favoriteTemplates.push(id);if(!state.savedPrograms.some(x=>x.sourceTemplateId===id))state.savedPrograms.unshift(templateProgram(t));}save();render();};
       const migrateTemplateFavorites = () => {(state.favoriteTemplates||[]).forEach(id=>{const t=templates.find(x=>x.id===id);if(t&&!state.savedPrograms.some(x=>x.sourceTemplateId===id))state.savedPrograms.push(templateProgram(t));});save();};
+      const inferWorkoutCategory = p => {
+        const aliases={cross:"crosstrening",crosstrening:"crosstrening",bodyweight:"kroppsvekt",kroppsvekt:"kroppsvekt",yoga:"toying",tøying:"toying",toying:"toying",morgen:"morgen",nodokt:"nodokt",nødøkt:"nodokt"};
+        const raw=String(p.cat||"").toLowerCase();
+        const mapped=aliases[raw]||raw;
+        if(flowOptions.some(([id])=>id===mapped)&&!['favoritt','favoritter'].includes(mapped))return mapped;
+        const text=`${p.name||""} ${p.timerChoice||""}`.toLowerCase();
+        if(text.includes("tabata"))return "tabata";
+        if(text.includes("push"))return "push";
+        if(text.includes("pull"))return "pull";
+        if(text.includes("core")||text.includes("kjerne"))return "core";
+        if(text.includes("cross"))return "crosstrening";
+        if(text.includes("kroppsvekt")||text.includes("bodyweight"))return "kroppsvekt";
+        if(text.includes("morgen"))return "morgen";
+        if(text.includes("tøy")||text.includes("yoga")||text.includes("mobilitet"))return "toying";
+        if(text.includes("nød"))return "nodokt";
+        if(text.includes("fullbody")||text.includes("helkropp"))return "fullbody";
+        const names=(p.ex||[]).map(e=>e.name||e[0]).filter(Boolean);
+        const candidates=flowOptions.map(([id])=>id).filter(id=>!['tabata','nodokt'].includes(id));
+        const scores=candidates.map(id=>[id,names.filter(name=>Object.values(groups[id]||{}).flat().includes(name)).length]);
+        scores.sort((a,b)=>b[1]-a[1]);
+        return scores[0]?.[1]>0?scores[0][0]:"fullbody";
+      };
+      const migrateFavoriteWorkoutStructure = () => {
+        if(state.favoriteWorkoutSchema===2)return;
+        const backupKey=`${storeKey}-pre-favorite-v2`;
+        if(!localStorage.getItem(backupKey))localStorage.setItem(backupKey,JSON.stringify(state.savedPrograms||[]));
+        const seen=new Set();
+        state.savedPrograms=(state.savedPrograms||[]).map(p=>({...p,cat:inferWorkoutCategory(p)})).filter(p=>{const exercises=(p.ex||[]).map(e=>e.name||e[0]).join("|");const key=p.sourceTemplateId?`template:${p.sourceTemplateId}`:`${String(p.name||"").trim().toLowerCase()}|${p.cat}|${exercises}|${p.timerChoice||"none"}`;if(seen.has(key))return false;seen.add(key);return true;});
+        state.favoriteWorkoutSchema=2;
+        save();
+      };
       const templateStats = t => {
         const sessions = state.sessions.filter(s=>s.name===t.name || s.name===`${t.name} kopi`);
         const durations = sessions.map(s=>Number(s.duration)||0).filter(Boolean);
@@ -187,7 +219,8 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
         save();
         render();
       };
-      const exercisePickListHtml = () => poolFor(state.builderPickCat).filter(n=>n.toLowerCase().includes((state.builderSearch||"").toLowerCase())).map(n=>{const m=metaFor(n); return `<div class="exercisePick"><div><button class="textButton exerciseName" data-detail="${n}">${n}</button><p class="muted">${m.primary} · ${m.equipment.join(", ")}</p></div><div class="buttons actionPair"><button class="secondary smallText" data-detail="${n}">Detaljer</button><button class="primary smallText" data-add="${n}">Legg til</button></div></div>`;}).join("") || '<p class="empty">Ingen øvelser funnet.</p>';
+      const builderFilterOptions = (placeholder,items,current) => `<option value="">${placeholder}</option>${items.map(x=>`<option value="${x}" ${current===x?"selected":""}>${x}</option>`).join("")}`;
+      const exercisePickListHtml = () => poolFor(state.builderPickCat).filter(n=>{const m=metaFor(n),q=(state.builderSearch||"").toLowerCase(),hay=[n,m.description,m.primary,...m.secondary,...m.equipment,...m.tags].join(" ").toLowerCase();return (!q||hay.includes(q))&&(!state.builderMuscle||m.primary===state.builderMuscle||m.secondary.includes(state.builderMuscle))&&(!state.builderEquipment||m.equipment.includes(state.builderEquipment))&&(!state.builderLevel||m.difficulty===state.builderLevel);}).map(n=>{const m=metaFor(n);return `<div class="exercisePick"><div><button class="textButton exerciseName" data-detail="${n}">${n}</button><p class="muted">${m.primary} · ${m.equipment.join(", ")} · ${m.difficulty}</p></div><div class="buttons actionPair"><button class="secondary smallText" data-detail="${n}">Detaljer</button><button class="primary smallText" data-add="${n}">Legg til</button></div></div>`;}).join("")||'<p class="empty">Ingen øvelser funnet.</p>';
       function renderShell() {
         document.querySelector("#globalHome").onclick=()=>{pauseWorkoutTimer();state.tab="home";state.builderMode=state.builderMode==="active"?"active":"build";save();render();};
         document.querySelector("#tabs").innerHTML = tabs.map(([id,label])=>`<button class="tab ${state.tab===id?"active":""}" data-tab="${id}">${label}</button>`).join("");
@@ -241,18 +274,25 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
         bindCommon();
       }      function renderHome() {
         const count=(state.savedPrograms||[]).length;
-        view.innerHTML=`<section class="homeHero"><button class="homeChoice primary" id="homeNew"><span>Lag ny økt</span><small>Velg treningsform, øvelser og timer</small></button><button class="homeChoice secondary" id="homeFav"><span>Gjør favorittøkt</span><small>${count?`${count} lagrede økter`:"Ingen lagrede ennå"}</small></button></section>`;
+        view.innerHTML=`<section class="homeHero"><button class="homeChoice primary" id="homeNew"><span>Lag økt</span><small>Bygg en helt ny økt</small></button><button class="homeChoice secondary" id="homeFav"><span>Favorittøkt</span><small>${count?`${count} lagrede økter`:"Ingen lagrede ennå"}</small></button></section>`;
         document.querySelector("#homeNew").onclick=startNewWorkoutFlow;
-        document.querySelector("#homeFav").onclick=()=>{state.tab="favworkouts"; save(); render();};
+        document.querySelector("#homeFav").onclick=()=>{state.favoriteCategory=null;state.tab="favworkouts";save();render();};
       }
       function renderFavoriteWorkouts() {
-        const programs=state.savedPrograms||[];
-        view.innerHTML=`<div class="section"><button class="secondary" id="backHome">Tilbake</button><h2>Favorittøkter</h2></div>${programs.length?`<div class="cards">${programs.map(p=>`<article class="panel grid"><div class="cardTop"><div><h3>${p.name}</h3><p class="muted">${flowLabel(p.cat)} · ${p.ex.length} øvelser · ca. ${estimatedProgramMinutes(p)} min</p></div><span class="pill">${p.timerChoice==="tabata"?"Tabata":p.timerChoice==="interval"?"Timer":"Uten timer"}</span></div><div class="list">${p.ex.map(e=>`<div class="historyRow clickableRow"><button class="textButton" data-detail="${e.name}">${e.name}</button><span class="muted">${format(e)}</span></div>`).join("")}</div><div class="buttons actionPair"><button class="primary" data-start-program="${p.id}">Start økt</button><button class="secondary" data-edit-program="${p.id}">Rediger</button><button class="secondary" data-duplicate-program="${p.id}">Dupliser</button><button class="secondary" data-delete-program="${p.id}">Slett</button></div></article>`).join("")}</div>`:'<p class="empty">Ingen favorittøkter lagret ennå. Lag en ny økt og trykk Lagre som favoritt.</p>'}`;
-        document.querySelector("#backHome").onclick=()=>{state.tab="home"; save(); render();};
-        document.querySelectorAll("[data-start-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.startProgram); b.onclick=()=>p&&startSavedWorkout(p);});
-        document.querySelectorAll("[data-delete-program]").forEach(b=>b.onclick=()=>{state.savedPrograms=programs.filter(p=>p.id!==b.dataset.deleteProgram); save(); render();});
-        document.querySelectorAll("[data-edit-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.editProgram); b.onclick=()=>{if(!p)return; state.builderName=p.name; state.builderCat=p.cat; state.builderPickCat=p.cat; state.builder=p.ex.map(e=>({...e})); state.timerChoice=p.timerChoice||"none"; state.pauseBetween=p.pauseBetween||0; state.builderStep="exercises"; state.builderMode="build"; state.editingProgramId=p.id; state.tab="builder"; save(); render();};});
-        document.querySelectorAll("[data-duplicate-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.duplicateProgram); b.onclick=()=>{if(!p)return; state.savedPrograms.unshift({...p,id:crypto.randomUUID(),name:`${p.name} kopi`,date:new Date().toISOString()}); save(); render();};});
+        const allPrograms=state.savedPrograms||[];
+        if(!state.favoriteCategory){
+          view.innerHTML=`<div class="section"><button class="secondary" id="backHome">Tilbake</button><h2>Favorittøkt</h2></div><div class="flowGrid">${flowOptions.map(([id,label])=>{const count=allPrograms.filter(p=>p.cat===id).length;return `<button class="flowChoice panel" data-favorite-cat="${id}"><span>${label}</span><small>${count} ${count===1?"lagret økt":"lagrede økter"}</small></button>`;}).join("")}</div>`;
+          document.querySelector("#backHome").onclick=()=>{state.tab="home";save();render();};
+          document.querySelectorAll("[data-favorite-cat]").forEach(b=>b.onclick=()=>{state.favoriteCategory=b.dataset.favoriteCat;save();render();});
+          return;
+        }
+        const programs=allPrograms.filter(p=>p.cat===state.favoriteCategory);
+        view.innerHTML=`<div class="section"><button class="secondary" id="backFavoriteTypes">Tilbake</button><h2>Mine ${flowLabel(state.favoriteCategory)}-økter</h2></div>${programs.length?`<div class="cards">${programs.map(p=>`<article class="panel grid"><div class="cardTop"><div><h3>${p.name}</h3><p class="muted">${flowLabel(p.cat)} · ${p.ex.length} øvelser · ca. ${estimatedProgramMinutes(p)} min</p></div><span class="pill">${p.timerChoice==="tabata"?"Tabata":p.timerChoice==="interval"?"Timer":"Uten timer"}</span></div><div class="list">${p.ex.map(e=>`<div class="historyRow clickableRow"><button class="textButton" data-detail="${e.name}">${e.name}</button><span class="muted">${format(e)}</span></div>`).join("")}</div><div class="buttons actionPair"><button class="primary" data-start-program="${p.id}">Start</button><button class="secondary" data-edit-program="${p.id}">Rediger</button><button class="secondary" data-duplicate-program="${p.id}">Dupliser</button><button class="secondary" data-delete-program="${p.id}">Slett</button></div></article>`).join("")}</div>`:`<p class="empty">Ingen lagrede ${flowLabel(state.favoriteCategory)}-økter ennå.</p>`}`;
+        document.querySelector("#backFavoriteTypes").onclick=()=>{state.favoriteCategory=null;save();render();};
+        document.querySelectorAll("[data-start-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.startProgram);b.onclick=()=>p&&startSavedWorkout(p);});
+        document.querySelectorAll("[data-delete-program]").forEach(b=>b.onclick=()=>{state.savedPrograms=allPrograms.filter(p=>p.id!==b.dataset.deleteProgram);save();render();});
+        document.querySelectorAll("[data-edit-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.editProgram);b.onclick=()=>{if(!p)return;state.builderName=p.name;state.builderCat=p.cat;state.builderPickCat=p.cat;state.builder=p.ex.map(e=>({...e}));state.timerChoice=p.timerChoice||"none";state.pauseBetween=p.pauseBetween||0;state.builderStep="exercises";state.builderMode="build";state.editingProgramId=p.id;state.tab="builder";save();render();};});
+        document.querySelectorAll("[data-duplicate-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.duplicateProgram);b.onclick=()=>{if(!p)return;state.savedPrograms.unshift({...p,id:crypto.randomUUID(),sourceTemplateId:undefined,name:`${p.name} kopi`,date:new Date().toISOString()});save();render();};});
         bindCommon();
       }      function renderFlowCategory() {
         view.innerHTML=`<div class="section"><button class="secondary" id="backHome">Tilbake</button><h2>Velg treningsform</h2></div><div class="flowGrid">${flowOptions.map(([id,label])=>`<button class="flowChoice panel" data-flow-cat="${id}"><span>${label}</span><small>${poolFor(id).length} øvelser</small></button>`).join("")}</div>`;
@@ -298,7 +338,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
         if (state.builderStep==="timer") return renderTimerStep();
         const timerBased=hasIntervalTimer(state.builderPickCat);
         const commonTimer=timerBased?`<section class="commonTimerSettings"><div><h3>Felles timer for hele økten</h3><p class="muted">Disse verdiene brukes på alle valgte øvelser.</p></div><div class="timerChoiceGrid"><button class="chip ${state.timerChoice==="none"?"active":""}" data-timer-choice="none">Ingen timer</button><button class="chip ${state.timerChoice==="interval"?"active":""}" data-timer-choice="interval">Arbeid og hvile</button>${state.builderPickCat==="tabata"?`<button class="chip ${state.timerChoice==="tabata"?"active":""}" data-timer-choice="tabata">Tabata 20/10</button>`:""}</div>${state.timerChoice!=="none"?`<div class="timerGrid"><label>Arbeid sekunder<input id="globalWork" inputmode="numeric" value="${state.globalWork||state.builder[0]?.work||20}"></label><label>Pause sekunder<input id="globalPause" inputmode="numeric" value="${state.globalPause||state.builder[0]?.pause||10}"></label><label>Antall runder<input id="globalRounds" inputmode="numeric" value="${state.globalRounds||state.builder[0]?.rounds||8}"></label><label>Hvile mellom runder<input id="pauseBetween" inputmode="numeric" value="${state.pauseBetween||0}"></label></div>`:""}</section>`:"";
-        view.innerHTML=`<div class="section"><h2>Velg øvelser</h2></div><article class="panel grid"><input id="builderName" value="${state.builderName||"Ny økt"}" placeholder="Navn på økt"><div class="categoryGrid">${flowOptions.map(([id,label])=>`<button class="chip ${state.builderPickCat===id?"active":""}" data-builder-cat="${id}">${label}</button>`).join("")}</div>${commonTimer}<div class="builderSummary"><strong>Ny økt:</strong> ${state.builder.length} øvelser valgt${state.builder.length?` · ${state.builder.map(e=>e.name).slice(-3).join(", ")}`:""}</div><div class="randomWorkoutRow"><span class="muted">Antall:</span><div class="randomCountChoices" aria-label="Antall øvelser">${[6,9,12,15].map(n=>`<button class="chip ${Number(state.randomCount)===n?"active":""}" data-random-count="${n}">${n}</button>`).join("")}</div><button class="secondary" id="randomWorkout">Generer tilfeldig økt</button></div><label>Søk i valgte kategori<input id="builderSearch" value="${state.builderSearch||""}" placeholder="Søk etter øvelse"></label><div class="exerciseList" id="exercisePickList">${exercisePickListHtml()}</div></article><article class="panel grid newWorkoutPanel"><div class="cardTop"><div><h2>Valgte øvelser</h2><p class="muted">${state.builder.length} valgte øvelser. Gå videre når økta er klar.</p></div><span class="pill">${flowLabel(state.builderPickCat)}</span></div>${state.justAdded?`<p class="addedNotice">La til ${state.justAdded} i Ny økt.</p>`:""}${state.builder.length?state.builder.map((e,i)=>builderLine(e,i)).join(""):'<p class="empty">Klikk på øvelser over for å legge dem til her.</p>'}<div class="buttons"><button class="primary" id="nextTimer">Gå videre</button><button class="secondary" id="saveProgram">Lagre som favoritt</button></div></article>`;
+        view.innerHTML=`<div class="section"><h2>Velg øvelser</h2></div><article class="panel grid"><input id="builderName" value="${state.builderName||"Ny økt"}" placeholder="Navn på økt"><div class="categoryGrid">${flowOptions.map(([id,label])=>`<button class="chip ${state.builderPickCat===id?"active":""}" data-builder-cat="${id}">${label}</button>`).join("")}</div>${commonTimer}<div class="builderSummary"><strong>Ny økt:</strong> ${state.builder.length} øvelser valgt${state.builder.length?` · ${state.builder.map(e=>e.name).slice(-3).join(", ")}`:""}</div><div class="randomWorkoutRow"><span class="muted">Antall:</span><div class="randomCountChoices" aria-label="Antall øvelser">${[6,9,12,15].map(n=>`<button class="chip ${Number(state.randomCount)===n?"active":""}" data-random-count="${n}">${n}</button>`).join("")}</div><button class="secondary" id="randomWorkout">Generer tilfeldig økt</button></div><div class="filterGrid builderFilters"><label>Søk<input id="builderSearch" value="${state.builderSearch||""}" placeholder="Søk etter øvelse"></label><label>Muskelgruppe<select id="builderMuscle">${builderFilterOptions("Alle muskelgrupper",filterData.muscles,state.builderMuscle)}</select></label><label>Utstyr<select id="builderEquipment">${builderFilterOptions("Alt utstyr",equipment,state.builderEquipment)}</select></label><label>Nivå<select id="builderLevel">${builderFilterOptions("Alle nivåer",filterData.levels,state.builderLevel)}</select></label></div><div class="exerciseList" id="exercisePickList">${exercisePickListHtml()}</div></article><article class="panel grid newWorkoutPanel"><div class="cardTop"><div><h2>Valgte øvelser</h2><p class="muted">${state.builder.length} valgte øvelser. Gå videre når økta er klar.</p></div><span class="pill">${flowLabel(state.builderPickCat)}</span></div>${state.justAdded?`<p class="addedNotice">La til ${state.justAdded} i Ny økt.</p>`:""}${state.builder.length?state.builder.map((e,i)=>builderLine(e,i)).join(""):'<p class="empty">Klikk på øvelser over for å legge dem til her.</p>'}<div class="buttons"><button class="primary" id="nextTimer">Gå videre</button><button class="secondary" id="saveProgram">Lagre som favoritt</button></div></article>`;
         bindBuilder();
       }      const clockText = sec => `${String(Math.floor(Math.max(0,sec)/60)).padStart(2,"0")}:${String(Math.max(0,sec)%60).padStart(2,"0")}`;
       const activeUsesIntervals = () => hasIntervalTimer(state.builderCat) && state.timerChoice!=="none";
@@ -382,11 +422,13 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       }      function bindBuilder() {
         const builderName = document.querySelector("#builderName");
         if (builderName) builderName.oninput=e=>{state.builderName=e.target.value; save();};
-        document.querySelectorAll("[data-builder-cat]").forEach(b=>b.onclick=()=>{const cat=b.dataset.builderCat;state.builderPickCat=cat;state.builderCat=cat;state.builder=[];state.timerChoice=cat==="tabata"?"tabata":hasIntervalTimer(cat)?"interval":"none";if(cat==="tabata"){state.globalWork=20;state.globalPause=10;state.globalRounds=8;}if(cat==="toying"){state.globalWork=45;state.globalPause=10;state.globalRounds=1;}state.builderSearch="";save();render();});
+        document.querySelectorAll("[data-builder-cat]").forEach(b=>b.onclick=()=>{const cat=b.dataset.builderCat;state.builderPickCat=cat;state.builderCat=cat;state.builder=[];state.timerChoice=cat==="tabata"?"tabata":hasIntervalTimer(cat)?"interval":"none";if(cat==="tabata"){state.globalWork=20;state.globalPause=10;state.globalRounds=8;}if(cat==="toying"){state.globalWork=45;state.globalPause=10;state.globalRounds=1;}state.builderSearch="";state.builderMuscle="";state.builderEquipment="";state.builderLevel="";save();render();});
         document.querySelectorAll("[data-timer-choice]").forEach(b=>b.onclick=()=>{state.timerChoice=b.dataset.timerChoice;if(state.timerChoice==="tabata"){state.globalWork=20;state.globalPause=10;state.globalRounds=8;}applyTimerToBuilder();save();render();});
         ["globalWork","globalPause","globalRounds","pauseBetween"].forEach(id=>{const el=document.querySelector("#"+id);if(el)el.oninput=e=>{state[id]=Number(e.target.value)||0;applyTimerToBuilder();save();};});
-        const builderSearch = document.querySelector("#builderSearch");
-        if (builderSearch) builderSearch.oninput=e=>{state.builderSearch=e.target.value; save(); document.querySelector("#exercisePickList").innerHTML=exercisePickListHtml(); bindCommon();};
+        const refreshBuilderExercises=()=>{save();document.querySelector("#exercisePickList").innerHTML=exercisePickListHtml();bindCommon();};
+        const builderSearch=document.querySelector("#builderSearch");
+        if(builderSearch)builderSearch.oninput=e=>{state.builderSearch=e.target.value;refreshBuilderExercises();};
+        [["builderMuscle","builderMuscle"],["builderEquipment","builderEquipment"],["builderLevel","builderLevel"]].forEach(([id,key])=>{const el=document.querySelector("#"+id);if(el)el.onchange=e=>{state[key]=e.target.value;refreshBuilderExercises();};});
         const randomCat = document.querySelector("#randomCat");
         if (randomCat) randomCat.onchange=e=>{state.randomCat=e.target.value; save();};
         const randomCount = document.querySelector("#randomCount");
@@ -494,6 +536,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       setInterval(updateCountdowns,1000);
       if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(()=>{});
       migrateTemplateFavorites();
+      migrateFavoriteWorkoutStructure();
       render();
 
 
