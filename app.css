@@ -33,6 +33,9 @@
       .compactFlowGrid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
       .compactFlowChoice { min-height:58px; align-items:center; justify-content:center; padding:10px; text-align:center; }
       .compactFlowChoice span { font-size:16px; line-height:1.15; }
+      .compactFlowChoice small { color:var(--muted); opacity:1; font-size:12px; }
+      .emptyCategory { display:grid; gap:10px; text-align:center; }
+      .emptyCategory .actionPair { justify-content:center; }
       .favoriteEditList { display:grid; gap:8px; }
       .favoriteEditRow { display:grid; grid-template-columns:32px minmax(0,1fr) auto; gap:10px; align-items:center; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.035); padding:10px; }
       .editOrder { display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:var(--strong); color:var(--muted); font-weight:900; }
@@ -232,3 +235,5 @@ body.lightMode .commonSetControls { background:rgba(91,163,68,.08); }
 .completionScreen label { display:grid; gap:8px; text-align:left; font-weight:900; }
 body.lightMode .guidedPreview span,body.lightMode .completionStats span { background:rgba(20,45,25,.035); }
 @media (max-width:560px) { .stageChoiceButtons { grid-template-columns:1fr; } .completionStats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.timerStepPanel { max-width:680px; margin:0 auto; }
+.timerStepPanel > .primary { width:100%; min-height:52px; }
