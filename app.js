@@ -1,4 +1,4 @@
-const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["core","Core"],["kroppsvekt","Kroppsvekt"],["morgen","Morgen"],["toying","Tøying"],["nodokt","Nødøkt"],["bank","Øvelser"],["builder","Bygger"],["history","Historikk"]];
+const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["tabata","Tabata"],["core","Core"],["kroppsvekt","Kroppsvekt"],["morgen","Morgen"],["toying","Tøying"],["nodokt","Nødøkt"],["bank","Øvelser"],["builder","Bygger"],["history","Historikk"]];
       const favorites = ["Deadlift","Landmine Press","Stangroing","Frontbøy","Floor Press","Inverted Rows","Pushups","Push Press","Shrugs","Bicepscurl","Triceps Extension","Planke/Rollout"];
       const equipment = ["Kroppsvekt","Manualer","Stang","Kabel","Maskin","Kettlebell","Strikk","TRX/slynger","Smith-maskin","Landmine","Medisinball","Annet","Benk","Pullupstang"];
       const groups = {
@@ -13,6 +13,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       };
       groups.core = {Core: [...new Set(Object.values(groups.core).flat())]};
       groups.kroppsvekt = {Kroppsvekt: [...new Set(Object.values(groups.kroppsvekt).flat())]};
+      groups.tabata = {Tabata: [...groups.kroppsvekt.Kroppsvekt]};
       const templates = [
         {id:"push-90",cat:"push",name:"Push 90 min",duration:90,desc:"Benkpress: 2 oppvarmingssett, 3 x 6-8",ex:[["Benkpress",3,"6-8"],["Skrå hantelpress",4,"8-12"],["Skulderpress",4,"6-10"],["Sidehev",4,"12-15"],["Facepull",3,"15-20"],["Rope Pushdown",3,"10-12"],["Overhead Triceps Extension",2,"12-15"],["Dips",3,"6-10"]]},
         {id:"push-60",cat:"push",name:"Push 60 min",duration:60,desc:"Rask styrkeøkt med favorittpress.",ex:[["Frontbøy",4,6],["Landmine Press",3,8],["Floor Press",3,"8-10"],["Push Press",3,6],["Pushups",3,"sett"],["Triceps Extension",3,12]]},
@@ -22,7 +23,6 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
         {id:"fullbody-enkel",cat:"fullbody",name:"Fullbody Enkel",desc:"Velg 6-8 øvelser fra favorittbanken.",ex:favorites.slice(0,8).map(n=>[n,3,"rolig"])},
         {id:"morgen-a",cat:"morgen",name:"Morgen A",duration:8,desc:"8 min.",ex:["Pushups","Alternating Superman","Bird Dog","Glute Bridge","Dead Bug","Standing Hip Hinge Drill","Calf Raises","Tall Posture Hold"].map(n=>[n,1,"45 sek"])},
         {id:"morgen-b",cat:"morgen",name:"Morgen B",duration:8,desc:"8 min.",ex:["Wall Pushups","Arm Circles","Reverse Lunges","Hip Flexor Stretch","Thoracic Rotation","Heel To Toe Balance Walk","Scapular Retractions","Nasal Breathing"].map(n=>[n,1,"45 sek"])},
-        {id:"bodyweight-tabata",cat:"kroppsvekt",name:"Kroppsvekt Tabata",duration:16,desc:"20 sek arbeid, 10 sek pause, 8 runder.",ex:["Pushups","Squat","Mountain Climbers","Dead Bug","Glute Bridge","Sideplanke"].map(n=>[n,1,"20/10"])},
         {id:"toying-enkel",cat:"toying",name:"Tøying Enkel",duration:8,desc:"Rolig tøying for hele kroppen.",ex:["Hamstring Stretch","Hip Flexor Stretch","Figure Four Stretch","Doorway Chest Stretch","Lat Stretch","Supine Twist"].map(n=>[n,1,"45 sek"])},
         {id:"nodokt-8",cat:"nodokt",name:"Nødøkt",duration:8,desc:"8 minutter når alt annet ryker.",ex:["Pushups","Inverted Rows","Glute Bridge","Dead Bug","Sideplanke","Dead Hang"].map(n=>[n,1,"AMRAP"])}
       ];
@@ -75,6 +75,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       let state = JSON.parse(localStorage.getItem(storeKey) || '{"tab":"home","builder":[],"builderName":"Egen økt","builderCat":"favoritter","sessions":[],"notes":{},"plan":{"monday":"push-60","wednesday":"pull-60","friday":"fullbody-styrke"},"energy":3,"sleep":3,"effort":"middels","pain":"","comment":"","rest":{}}');
       state.favoriteTemplates = state.favoriteTemplates || [];
       state.savedPrograms = state.savedPrograms || [];
+      if(state.tab==="builder"&&state.builderMode!=="active"){state.tab="home";state.builder=[];state.builderStep="category";state.builderName="Ny økt";state.justAdded="";}
       state.removedFavorites = state.removedFavorites || [];
       state.exerciseVideos = state.exerciseVideos || {};
       state.youtubeSearches = state.youtubeSearches || {};
@@ -151,7 +152,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       const suggestion = e => { const last=lastEntries(e.name)[0]; return last?`Sist brukt: ${new Date(last.date).toLocaleDateString("no")} · ${format(last)}`:"Fokuser på god teknikk og jevn flyt."; };
       const poolFor = cat => [...new Set(Object.values(groups[cat==="tabata"?"kroppsvekt":cat]||{}).flat().concat(templates.filter(t=>t.cat===(cat==="tabata"?"kroppsvekt":cat)).flatMap(t=>t.ex.map(x=>x[0]))))].sort((a,b)=>a.localeCompare(b,"no"));
       const categoryOptions = [["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["kroppsvekt","Kroppsvekt"],["morgen","Morgentrening"],["toying","Tøying"],["core","Core"]];
-      const flowOptions = [["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["core","Core"],["kroppsvekt","Kroppsvekt"],["toying","Tøying"],["tabata","Tabata"]];
+      const flowOptions = [["push","Push"],["pull","Pull"],["fullbody","Fullbody"],["crosstrening","Cross"],["tabata","Tabata"],["core","Core"],["kroppsvekt","Kroppsvekt"],["toying","Tøying"]];
       const intervalCategories = ["crosstrening","kroppsvekt","tabata","toying"];
       const hasIntervalTimer = cat => intervalCategories.includes(cat);
       const timerSoundOptions = [["soft-bell","Myk klokke"],["warm-gong","Varm gong"],["soft-click","Diskret klikk"],["none","Ingen lyd"]];
@@ -159,10 +160,12 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       const soundLabels = {work:"Start arbeid",rest:"Start hvile",countdown:"Nedtelling",complete:"Økt ferdig",warning:"Varsel"};
       const soundPickerHtml = () => `<div class="soundPicker"><div class="cardTop"><div><strong>Lydsignal</strong><p class="muted">Bruk egne lydfiler i sounds/, eller varm innebygd lyd hvis filen mangler.</p></div></div><div class="buttons">${timerSoundOptions.map(([id,label])=>`<button class="chip ${state.timerSound===id?"active":""}" data-sound-choice="${id}">${label}</button>`).join("")}</div><div class="buttons">${volumeOptions.map(([id,label])=>`<button class="chip ${state.timerVolume===id?"active":""}" data-volume-choice="${id}">${label}</button>`).join("")}</div><div class="buttons">${Object.entries(soundLabels).map(([id,label])=>`<button class="secondary smallText" data-preview-sound="${id}">Test ${label}</button>`).join("")}</div></div>`;
       const flowLabel = id => (flowOptions.find(x=>x[0]===id)||categoryOptions.find(x=>x[0]===id)||["","Egen"])[1];
-      const setFlowCategory = cat => { state.builderPickCat=cat; state.builderCat=cat; state.builderName=`Ny ${flowLabel(cat)}-økt`; state.builder=[]; state.builderSearch=""; state.builderStep="exercises"; state.timerChoice=cat==="tabata"?"tabata":hasIntervalTimer(cat)?"interval":"none";if(cat==="toying"){state.globalWork=45;state.globalPause=10;state.globalRounds=1;} save(); render(); };
-      const startNewWorkoutFlow = () => { state.builder=[]; state.builderName="Ny økt"; state.builderStep="category"; state.builderMode="build"; state.tab="builder"; state.justAdded=""; save(); render(); };
-      const startSavedWorkout = p => {state.builderName=p.name;state.builderCat=p.cat||"favoritt";state.builderPickCat=p.cat||"favoritt";state.builder=p.ex.map(e=>({...e,setCount:setCountOf(e)===1?3:setCountOf(e),targetReps:e.targetReps||e.reps||""}));state.timerChoice=p.timerChoice||"none";state.pauseBetween=p.pauseBetween||0;state.builderStep="timer";state.builderMode="build";state.tab="builder";save();render();};
-      const toggleTemplateFavorite = id => { state.favoriteTemplates = state.favoriteTemplates || []; state.favoriteTemplates = state.favoriteTemplates.includes(id) ? state.favoriteTemplates.filter(x=>x!==id) : [...state.favoriteTemplates,id]; save(); render(); };
+      const setFlowCategory = cat => { state.builderPickCat=cat; state.builderCat=cat; state.builderName=`Ny ${flowLabel(cat)}-økt`; state.builder=[]; state.builderSearch=""; state.builderStep="exercises"; state.timerChoice=cat==="tabata"?"tabata":hasIntervalTimer(cat)?"interval":"none";if(cat==="tabata"){state.globalWork=20;state.globalPause=10;state.globalRounds=8;}if(cat==="toying"){state.globalWork=45;state.globalPause=10;state.globalRounds=1;} save(); render(); };
+      const startNewWorkoutFlow = () => { state.builder=[]; state.builderName="Ny økt"; state.builderStep="category"; state.builderMode="build"; state.tab="builder"; state.justAdded=""; state.editingProgramId=null; save(); render(); };
+      const startSavedWorkout = p => {state.builderName=p.name;state.builderCat=p.cat||"favoritt";state.builderPickCat=p.cat||"favoritt";state.builder=p.ex.map(e=>({...e,setCount:p.cat==="toying"?setCountOf(e):setCountOf(e)===1?3:setCountOf(e),targetReps:e.targetReps||e.reps||""}));state.timerChoice=p.timerChoice||"none";state.pauseBetween=p.pauseBetween||0;state.builderStep="timer";state.builderMode="build";state.tab="builder";save();render();};
+      const templateProgram = t => {const timerChoice=t.cat==="tabata"?"tabata":hasIntervalTimer(t.cat)?"interval":"none";const work=t.cat==="tabata"?20:t.cat==="toying"?45:40;const pause=t.cat==="tabata"?10:10;const rounds=t.cat==="tabata"?8:t.cat==="toying"?1:3;return {id:crypto.randomUUID(),sourceTemplateId:t.id,name:t.name,cat:t.cat,ex:t.ex.map(x=>({...entry(x[0],Number(x[1])||3,x[2]||""),work,pause,rounds})),timerChoice,pauseBetween:0,duration:t.duration,date:new Date().toISOString()};};
+      const toggleTemplateFavorite = id => {state.favoriteTemplates=state.favoriteTemplates||[];state.savedPrograms=state.savedPrograms||[];const exists=state.favoriteTemplates.includes(id),t=templates.find(x=>x.id===id);if(exists){state.favoriteTemplates=state.favoriteTemplates.filter(x=>x!==id);state.savedPrograms=state.savedPrograms.filter(x=>x.sourceTemplateId!==id);}else if(t){state.favoriteTemplates.push(id);if(!state.savedPrograms.some(x=>x.sourceTemplateId===id))state.savedPrograms.unshift(templateProgram(t));}save();render();};
+      const migrateTemplateFavorites = () => {(state.favoriteTemplates||[]).forEach(id=>{const t=templates.find(x=>x.id===id);if(t&&!state.savedPrograms.some(x=>x.sourceTemplateId===id))state.savedPrograms.push(templateProgram(t));});save();};
       const templateStats = t => {
         const sessions = state.sessions.filter(s=>s.name===t.name || s.name===`${t.name} kopi`);
         const durations = sessions.map(s=>Number(s.duration)||0).filter(Boolean);
@@ -172,23 +175,23 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       const randomWorkout = () => {
         const randomCategory = state.builderPickCat || state.randomCat || "kroppsvekt";
         const pool = poolFor(randomCategory).filter(Boolean);
-        const maxCount=randomCategory==="toying"?15:12; const count = Math.min(Math.max(Number(state.randomCount)||6,6),maxCount);
+        const count = Math.min(Math.max(Number(state.randomCount)||6,6),15);
         const shuffled = [...pool].sort(()=>Math.random()-.5).slice(0,count);
-        state.builderName = `Tilfeldig ${categoryOptions.find(x=>x[0]===randomCategory)?.[1]||"økt"}`;
+        state.builderName = `Tilfeldig ${flowLabel(randomCategory)}`;
         state.builderCat = randomCategory;
-        state.builder = shuffled.map(n=>({...entry(n,randomCategory==="toying"?1:3,"45 sek"), mode:"intervall", work:45, pause:randomCategory==="toying"?10:15, rounds:randomCategory==="toying"?1:3}));
+        state.builder = shuffled.map(n=>({...entry(n,randomCategory==="toying"?1:3,randomCategory==="tabata"?"20/10":"45 sek"),mode:"intervall",work:randomCategory==="tabata"?20:45,pause:randomCategory==="tabata"||randomCategory==="toying"?10:15,rounds:randomCategory==="tabata"?8:randomCategory==="toying"?1:3}));
         state.tab = "builder";
         state.builderStep = "exercises";
-        state.timerChoice = "interval";
+        state.timerChoice = randomCategory==="tabata"?"tabata":"interval";
         state.startedAt = Date.now();
         save();
         render();
       };
-      const exercisePickListHtml = () => poolFor(state.builderPickCat).filter(n=>n.toLowerCase().includes((state.builderSearch||"").toLowerCase())).map(n=>{const m=metaFor(n); return `<div class="exercisePick"><div><button class="textButton exerciseName" data-detail="${n}">${n}</button><p class="muted">${m.primary} · ${m.equipment.join(", ")}</p></div><div class="buttons actionPair"><button class="secondary smallText" data-detail="${n}">Detaljer</button><button class="primary smallText" data-add="${n}">Legg til</button>${isFavoriteExercise(n)?`<button class="secondary smallText" data-remove-favorite="${n}">Fjern</button>`:""}</div></div>`;}).join("") || '<p class="empty">Ingen øvelser funnet.</p>';
+      const exercisePickListHtml = () => poolFor(state.builderPickCat).filter(n=>n.toLowerCase().includes((state.builderSearch||"").toLowerCase())).map(n=>{const m=metaFor(n); return `<div class="exercisePick"><div><button class="textButton exerciseName" data-detail="${n}">${n}</button><p class="muted">${m.primary} · ${m.equipment.join(", ")}</p></div><div class="buttons actionPair"><button class="secondary smallText" data-detail="${n}">Detaljer</button><button class="primary smallText" data-add="${n}">Legg til</button></div></div>`;}).join("") || '<p class="empty">Ingen øvelser funnet.</p>';
       function renderShell() {
         document.querySelector("#globalHome").onclick=()=>{pauseWorkoutTimer();state.tab="home";state.builderMode=state.builderMode==="active"?"active":"build";save();render();};
         document.querySelector("#tabs").innerHTML = tabs.map(([id,label])=>`<button class="tab ${state.tab===id?"active":""}" data-tab="${id}">${label}</button>`).join("");
-        document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{pauseWorkoutTimer();state.tab=b.dataset.tab; save(); render();});
+        document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{pauseWorkoutTimer();if(b.dataset.tab==="builder")return startNewWorkoutFlow();state.tab=b.dataset.tab; save(); render();});
         const monthAgo=Date.now()-30*24*60*60*1000;
         document.querySelector("#monthCount").textContent = `${state.sessions.filter(s=>new Date(s.date).getTime()>=monthAgo).length} økter / 30d`;
         document.querySelector("#volumeCount").textContent = `${state.sessions.reduce((sum,s)=>sum+(Number(s.duration)||0),0)} min totalt`;
@@ -199,7 +202,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       }
       function card(name) {
         const recent=lastEntries(name), m=metaFor(name);
-        return `<article class="panel grid"><div class="cardTop"><div><h3>${name}</h3><p class="muted">${m.description}</p></div></div><div class="meta summaryMeta"><span><strong>Primær:</strong> ${m.primary}</span><span><strong>Utstyr:</strong> ${m.equipment.join(", ")}</span><span><strong>Nivå:</strong> ${m.difficulty}</span><span><strong>Mål:</strong> ${m.goals.slice(0,2).join(", ")}</span></div><div class="tags">${isFavoriteExercise(name)?'<span class="tag">Favoritt</span>':""}${m.bankCats.slice(0,3).map(t=>`<span class="tag">${t}</span>`).join("")}${m.tags.slice(0,4).map(t=>`<span class="tag">${t}</span>`).join("")}</div><div class="records"><span>Sist brukt: ${recent[0]?new Date(recent[0].date).toLocaleDateString("no"):"ikke brukt"}</span><span>Gjennomført: ${exerciseUseCount(name)} ganger</span></div>${spark(progression(name))}<div class="buttons actionPair"><button class="secondary" data-detail="${name}">Detaljer</button><button class="primary" data-add="${name}">Legg til</button>${isFavoriteExercise(name)?`<button class="secondary smallText" data-remove-favorite="${name}">Fjern</button>`:""}</div></article>`;
+        return `<article class="panel grid"><div class="cardTop"><div><h3>${name}</h3><p class="muted">${m.description}</p></div></div><div class="meta summaryMeta"><span><strong>Primær:</strong> ${m.primary}</span><span><strong>Utstyr:</strong> ${m.equipment.join(", ")}</span><span><strong>Nivå:</strong> ${m.difficulty}</span><span><strong>Mål:</strong> ${m.goals.slice(0,2).join(", ")}</span></div><div class="tags">${m.bankCats.slice(0,3).map(t=>`<span class="tag">${t}</span>`).join("")}${m.tags.slice(0,4).map(t=>`<span class="tag">${t}</span>`).join("")}</div><div class="records"><span>Sist brukt: ${recent[0]?new Date(recent[0].date).toLocaleDateString("no"):"ikke brukt"}</span><span>Gjennomført: ${exerciseUseCount(name)} ganger</span></div>${spark(progression(name))}<div class="buttons actionPair"><button class="secondary" data-detail="${name}">Detaljer</button><button class="primary" data-add="${name}">Legg til</button></div></article>`;
       }
       function addToBuilder(name) {
         state.builder.push(entry(name,state.builderPickCat==="toying"?1:3,state.builderPickCat==="toying"?"45 sek":""));
@@ -231,16 +234,12 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       const estimatedProgramMinutes = p => p.duration || (p.timerChoice!=="none" ? Math.max(1,Math.round((p.ex||[]).reduce((sum,e)=>sum+((Number(e.work)||state.globalWork||40)+(Number(e.pause)||state.globalPause||20))*(Number(e.rounds)||state.globalRounds||3),0)/60)) : Math.max(10,(p.ex||[]).length*6));
       function start(name,cat,ex) { state.builderName=name; state.builder=ex; state.builderCat=cat; state.builderMode="active"; state.activeIndex=0; state.swapIndex=null; state.intervalRun=null; state.setRest={}; state.startedAt=Date.now(); state.energy=3; state.sleep=3; state.effort="middels"; state.pain=""; state.comment=""; state.tab="builder"; save(); render(); }
       function renderCategory(cat) {
-        const favs=state.favoriteTemplates||[];
-        const catTemplates=templates.filter(t=>t.cat===cat).sort((a,b)=>(favs.includes(b.id)?1:0)-(favs.includes(a.id)?1:0));
-        const visibleTemplates=state.showFavoriteTemplatesOnly?catTemplates.filter(t=>favs.includes(t.id)):catTemplates;
-        const tpl=visibleTemplates.map(templateCard).join("");
-        const groupHtml=groups[cat]?Object.entries(groups[cat]).map(([title,names])=>`<article class="panel grid"><h3>${title}</h3><div class="list">${names.map(n=>`<div class="bankLine clickableRow"><div><button class="textButton exerciseName" data-detail="${n}">${n}</button><p class="muted">${lastEntries(n)[0]?`Sist: ${format(lastEntries(n)[0])}`:"Øvelse"}</p></div><div class="buttons actionPair"><button class="secondary smallText" data-detail="${n}">Detaljer</button><button class="primary smallText" data-add="${n}">Legg til</button>${isFavoriteExercise(n)?`<button class="secondary smallText" data-remove-favorite="${n}">Fjern</button>`:""}</div></div>`).join("")}</div></article>`).join(""):"";
-        view.innerHTML=`<div class="section"><h2>${tabs.find(t=>t[0]===cat)[1]}</h2><button class="secondary" id="favFilter">${state.showFavoriteTemplatesOnly?"Vis alle":"Vis favorittøkter"}</button></div>${tpl?`<div class="cards">${tpl}</div>`:""}${groupHtml?`<div class="cards">${groupHtml}</div>`:""}`;
-        document.querySelector("#favFilter").onclick=()=>{state.showFavoriteTemplatesOnly=!state.showFavoriteTemplatesOnly; save(); render();};
+        const catTemplates=templates.filter(t=>t.cat===cat);
+        const tpl=catTemplates.map(templateCard).join("");
+        const groupHtml=groups[cat]?Object.entries(groups[cat]).map(([title,names])=>`<article class="panel grid"><h3>${title}</h3><div class="list">${names.map(n=>`<div class="bankLine clickableRow"><div><button class="textButton exerciseName" data-detail="${n}">${n}</button><p class="muted">${lastEntries(n)[0]?`Sist: ${format(lastEntries(n)[0])}`:"Øvelse"}</p></div><div class="buttons actionPair"><button class="secondary smallText" data-detail="${n}">Detaljer</button><button class="primary smallText" data-add="${n}">Legg til</button></div></div>`).join("")}</div></article>`).join(""):"";
+        view.innerHTML=`<div class="section"><h2>${tabs.find(t=>t[0]===cat)[1]}</h2></div>${tpl?`<div class="cards">${tpl}</div>`:""}${groupHtml?`<div class="cards">${groupHtml}</div>`:""}`;
         bindCommon();
-      }
-      function renderHome() {
+      }      function renderHome() {
         const count=(state.savedPrograms||[]).length;
         view.innerHTML=`<section class="homeHero"><button class="homeChoice primary" id="homeNew"><span>Lag ny økt</span><small>Velg treningsform, øvelser og timer</small></button><button class="homeChoice secondary" id="homeFav"><span>Gjør favorittøkt</span><small>${count?`${count} lagrede økter`:"Ingen lagrede ennå"}</small></button></section>`;
         document.querySelector("#homeNew").onclick=startNewWorkoutFlow;
@@ -252,7 +251,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
         document.querySelector("#backHome").onclick=()=>{state.tab="home"; save(); render();};
         document.querySelectorAll("[data-start-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.startProgram); b.onclick=()=>p&&startSavedWorkout(p);});
         document.querySelectorAll("[data-delete-program]").forEach(b=>b.onclick=()=>{state.savedPrograms=programs.filter(p=>p.id!==b.dataset.deleteProgram); save(); render();});
-        document.querySelectorAll("[data-edit-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.editProgram); b.onclick=()=>{if(!p)return; state.builderName=p.name; state.builderCat=p.cat; state.builderPickCat=p.cat; state.builder=p.ex.map(e=>({...e})); state.timerChoice=p.timerChoice||"none"; state.pauseBetween=p.pauseBetween||0; state.builderStep="exercises"; state.builderMode="build"; state.tab="builder"; save(); render();};});
+        document.querySelectorAll("[data-edit-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.editProgram); b.onclick=()=>{if(!p)return; state.builderName=p.name; state.builderCat=p.cat; state.builderPickCat=p.cat; state.builder=p.ex.map(e=>({...e})); state.timerChoice=p.timerChoice||"none"; state.pauseBetween=p.pauseBetween||0; state.builderStep="exercises"; state.builderMode="build"; state.editingProgramId=p.id; state.tab="builder"; save(); render();};});
         document.querySelectorAll("[data-duplicate-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.duplicateProgram); b.onclick=()=>{if(!p)return; state.savedPrograms.unshift({...p,id:crypto.randomUUID(),name:`${p.name} kopi`,date:new Date().toISOString()}); save(); render();};});
         bindCommon();
       }      function renderFlowCategory() {
@@ -272,12 +271,15 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
         if(!state.builder.length) return;
         applyTimerToBuilder();
         state.savedPrograms=state.savedPrograms||[];
-        const workout={id:crypto.randomUUID(),name:state.builderName||"Favorittøkt",cat:state.builderCat||state.builderPickCat,ex:state.builder.map(e=>({...e})),timerChoice:state.timerChoice||"none",pauseBetween:state.pauseBetween||0,date:new Date().toISOString()};
-        state.savedPrograms.unshift(workout);
+        const name=(state.builderName||"Favorittøkt").trim();
+        const cat=state.builderCat||state.builderPickCat;
+        const existingIndex=state.savedPrograms.findIndex(p=>p.id===state.editingProgramId||(p.name||"").trim().toLowerCase()===name.toLowerCase()&&p.cat===cat);
+        const workout={id:existingIndex>=0?state.savedPrograms[existingIndex].id:crypto.randomUUID(),name,cat,ex:state.builder.map(e=>({...e})),timerChoice:state.timerChoice||"none",pauseBetween:state.pauseBetween||0,date:new Date().toISOString()};
+        if(existingIndex>=0)state.savedPrograms.splice(existingIndex,1,workout);else state.savedPrograms.unshift(workout);
+        state.editingProgramId=workout.id;
         save();
-        alert("Økten er lagret som favoritt.");
-      }
-      function renderTimerStep() {
+        alert(existingIndex>=0?"Favorittøkten er oppdatert.":"Økten er lagret som favoritt.");
+      }      function renderTimerStep() {
         const eligible=hasIntervalTimer(state.builderCat);
         applyTimerToBuilder();
         const timerSummary=eligible&&state.timerChoice!=="none"?`${state.globalWork||20} sek arbeid · ${state.globalPause||10} sek pause · ${state.globalRounds||8} runder${state.pauseBetween?` · ${state.pauseBetween} sek ekstra hvile`:""}`:"Ingen timer";
@@ -294,10 +296,9 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
         if (state.builderMode==="active") return renderActiveWorkout();
         if (state.builderStep==="category") return renderFlowCategory();
         if (state.builderStep==="timer") return renderTimerStep();
-        const saved=(state.savedPrograms||[]).slice(0,6).map(p=>`<button class="chip" data-load-program="${p.id}">${p.name}</button>`).join("");
         const timerBased=hasIntervalTimer(state.builderPickCat);
         const commonTimer=timerBased?`<section class="commonTimerSettings"><div><h3>Felles timer for hele økten</h3><p class="muted">Disse verdiene brukes på alle valgte øvelser.</p></div><div class="timerChoiceGrid"><button class="chip ${state.timerChoice==="none"?"active":""}" data-timer-choice="none">Ingen timer</button><button class="chip ${state.timerChoice==="interval"?"active":""}" data-timer-choice="interval">Arbeid og hvile</button>${state.builderPickCat==="tabata"?`<button class="chip ${state.timerChoice==="tabata"?"active":""}" data-timer-choice="tabata">Tabata 20/10</button>`:""}</div>${state.timerChoice!=="none"?`<div class="timerGrid"><label>Arbeid sekunder<input id="globalWork" inputmode="numeric" value="${state.globalWork||state.builder[0]?.work||20}"></label><label>Pause sekunder<input id="globalPause" inputmode="numeric" value="${state.globalPause||state.builder[0]?.pause||10}"></label><label>Antall runder<input id="globalRounds" inputmode="numeric" value="${state.globalRounds||state.builder[0]?.rounds||8}"></label><label>Hvile mellom runder<input id="pauseBetween" inputmode="numeric" value="${state.pauseBetween||0}"></label></div>`:""}</section>`:"";
-        view.innerHTML=`<div class="section"><h2>Velg øvelser</h2></div><article class="panel grid"><input id="builderName" value="${state.builderName||"Ny økt"}" placeholder="Navn på økt"><div class="categoryGrid">${flowOptions.map(([id,label])=>`<button class="chip ${state.builderPickCat===id?"active":""}" data-builder-cat="${id}">${label}</button>`).join("")}</div>${commonTimer}${saved?`<div class="chipRow"><span class="muted">Lagrede:</span>${saved}</div>`:""}<div class="builderSummary"><strong>Ny økt:</strong> ${state.builder.length} øvelser valgt${state.builder.length?` · ${state.builder.map(e=>e.name).slice(-3).join(", ")}`:""}</div><label>Søk i valgte kategori<input id="builderSearch" value="${state.builderSearch||""}" placeholder="Søk etter øvelse"></label><div class="randomWorkoutRow"><span class="muted">Antall:</span><div class="randomCountChoices" aria-label="Antall øvelser">${(state.builderPickCat==="toying"?[6,9,12,15]:[6,9,12]).map(n=>`<button class="chip ${Number(state.randomCount)===n?"active":""}" data-random-count="${n}">${n}</button>`).join("")}</div><button class="secondary" id="randomWorkout">Generer tilfeldig økt</button></div><div class="exerciseList" id="exercisePickList">${exercisePickListHtml()}</div></article><article class="panel grid newWorkoutPanel"><div class="cardTop"><div><h2>Valgte øvelser</h2><p class="muted">${state.builder.length} valgte øvelser. Gå videre når økta er klar.</p></div><span class="pill">${flowLabel(state.builderPickCat)}</span></div>${state.justAdded?`<p class="addedNotice">La til ${state.justAdded} i Ny økt.</p>`:""}${state.builder.length?state.builder.map((e,i)=>builderLine(e,i)).join(""):'<p class="empty">Klikk på øvelser over for å legge dem til her.</p>'}<div class="buttons"><button class="primary" id="nextTimer">Gå videre</button><button class="secondary" id="saveProgram">Lagre som favoritt</button></div></article>`;
+        view.innerHTML=`<div class="section"><h2>Velg øvelser</h2></div><article class="panel grid"><input id="builderName" value="${state.builderName||"Ny økt"}" placeholder="Navn på økt"><div class="categoryGrid">${flowOptions.map(([id,label])=>`<button class="chip ${state.builderPickCat===id?"active":""}" data-builder-cat="${id}">${label}</button>`).join("")}</div>${commonTimer}<div class="builderSummary"><strong>Ny økt:</strong> ${state.builder.length} øvelser valgt${state.builder.length?` · ${state.builder.map(e=>e.name).slice(-3).join(", ")}`:""}</div><div class="randomWorkoutRow"><span class="muted">Antall:</span><div class="randomCountChoices" aria-label="Antall øvelser">${[6,9,12,15].map(n=>`<button class="chip ${Number(state.randomCount)===n?"active":""}" data-random-count="${n}">${n}</button>`).join("")}</div><button class="secondary" id="randomWorkout">Generer tilfeldig økt</button></div><label>Søk i valgte kategori<input id="builderSearch" value="${state.builderSearch||""}" placeholder="Søk etter øvelse"></label><div class="exerciseList" id="exercisePickList">${exercisePickListHtml()}</div></article><article class="panel grid newWorkoutPanel"><div class="cardTop"><div><h2>Valgte øvelser</h2><p class="muted">${state.builder.length} valgte øvelser. Gå videre når økta er klar.</p></div><span class="pill">${flowLabel(state.builderPickCat)}</span></div>${state.justAdded?`<p class="addedNotice">La til ${state.justAdded} i Ny økt.</p>`:""}${state.builder.length?state.builder.map((e,i)=>builderLine(e,i)).join(""):'<p class="empty">Klikk på øvelser over for å legge dem til her.</p>'}<div class="buttons"><button class="primary" id="nextTimer">Gå videre</button><button class="secondary" id="saveProgram">Lagre som favoritt</button></div></article>`;
         bindBuilder();
       }      const clockText = sec => `${String(Math.floor(Math.max(0,sec)/60)).padStart(2,"0")}:${String(Math.max(0,sec)%60).padStart(2,"0")}`;
       const activeUsesIntervals = () => hasIntervalTimer(state.builderCat) && state.timerChoice!=="none";
@@ -381,7 +382,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       }      function bindBuilder() {
         const builderName = document.querySelector("#builderName");
         if (builderName) builderName.oninput=e=>{state.builderName=e.target.value; save();};
-        document.querySelectorAll("[data-builder-cat]").forEach(b=>b.onclick=()=>{const cat=b.dataset.builderCat;state.builderPickCat=cat;state.builderCat=cat;state.timerChoice=cat==="tabata"?"tabata":hasIntervalTimer(cat)?"interval":"none";if(cat==="toying"){state.globalWork=45;state.globalPause=10;state.globalRounds=1;}state.builderSearch="";applyTimerToBuilder();save();render();});
+        document.querySelectorAll("[data-builder-cat]").forEach(b=>b.onclick=()=>{const cat=b.dataset.builderCat;state.builderPickCat=cat;state.builderCat=cat;state.builder=[];state.timerChoice=cat==="tabata"?"tabata":hasIntervalTimer(cat)?"interval":"none";if(cat==="tabata"){state.globalWork=20;state.globalPause=10;state.globalRounds=8;}if(cat==="toying"){state.globalWork=45;state.globalPause=10;state.globalRounds=1;}state.builderSearch="";save();render();});
         document.querySelectorAll("[data-timer-choice]").forEach(b=>b.onclick=()=>{state.timerChoice=b.dataset.timerChoice;if(state.timerChoice==="tabata"){state.globalWork=20;state.globalPause=10;state.globalRounds=8;}applyTimerToBuilder();save();render();});
         ["globalWork","globalPause","globalRounds","pauseBetween"].forEach(id=>{const el=document.querySelector("#"+id);if(el)el.oninput=e=>{state[id]=Number(e.target.value)||0;applyTimerToBuilder();save();};});
         const builderSearch = document.querySelector("#builderSearch");
@@ -403,7 +404,6 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
         document.querySelectorAll("[data-rest]").forEach(b=>b.onclick=()=>{const [i,sec]=b.dataset.rest.split(":"); state.builder[i].rest=Number(sec); save(); render();});
         document.querySelectorAll("[data-timer]").forEach(b=>b.onclick=()=>{state.rest=state.rest||{}; const i=b.dataset.timer; state.rest[i]=Date.now()+(state.builder[i].rest||90)*1000; save(); updateCountdowns();});
         document.querySelectorAll("[data-worktimer]").forEach(b=>b.onclick=()=>{state.rest=state.rest||{}; const i=b.dataset.worktimer, e=state.builder[i], seconds=e.mode==="kontinuerlig"?(e.work||120):((e.work||45)+(e.pause||15))*(e.rounds||3); state.rest[i]=Date.now()+seconds*1000; save(); updateCountdowns();});
-        document.querySelectorAll("[data-load-program]").forEach(b=>b.onclick=()=>{const p=(state.savedPrograms||[]).find(x=>x.id===b.dataset.loadProgram); if(!p)return; state.builderName=p.name; state.builderCat=p.cat; state.builder=p.ex.map(e=>({...e,setCount:setCountOf(e)===1?3:setCountOf(e),targetReps:e.targetReps||e.reps||""})); state.startedAt=Date.now(); save(); render();});
         const finish = document.querySelector("#finish");
         if (finish) finish.onclick=()=>{if(!state.builder.length)return; state.sessions.unshift({date:new Date().toISOString(),name:state.builderName||"Egen økt",cat:state.builderCat||"favoritter",duration:state.startedAt?Math.max(1,Math.round((Date.now()-state.startedAt)/60000)):undefined,ex:state.builder,comment:state.comment}); state.builder=[]; state.rest={}; state.justAdded=""; state.builderMode="build"; state.tab="history"; save(); render();};
         const nextTimer = document.querySelector("#nextTimer");
@@ -493,6 +493,7 @@ const tabs = [["home","Start"],["templates","Øktmaler"],["push","Push"],["pull"
       }
       setInterval(updateCountdowns,1000);
       if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+      migrateTemplateFavorites();
       render();
 
 
