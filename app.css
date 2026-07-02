@@ -11,7 +11,8 @@
       .globalHome { position:fixed; top:10px; left:10px; z-index:50; min-height:42px; border-radius:8px; color:var(--text); background:#151b20; border:1px solid var(--line); padding:0 13px; font-weight:900; box-shadow:0 8px 24px rgba(0,0,0,.3); cursor:pointer; }
       .topbar { padding-left:74px; }
       .topbar,.quick,.section,.cardTop,.historyRow,.builderHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
-      .topbar { padding:6px 2px 14px; }
+      .topbar { padding:6px 2px 14px 74px; }
+      .section { min-height:42px; margin-bottom:12px; }
       .eyebrow { color:var(--accent); font-size:12px; font-weight:900; text-transform:uppercase; }
       .stats { display:grid; gap:4px; justify-items:end; color:var(--muted); font-size:12px; font-weight:800; }
       .tabs { display:flex; gap:8px; overflow-x:auto; margin:0 -12px 14px; padding:0 12px 4px; scrollbar-width:none; }
@@ -150,7 +151,7 @@
       .activeTimerControls { text-align:left; }
       .activeTimerButtons,.navButtons { justify-content:center; }
       button:disabled { opacity:.45; cursor:not-allowed; }
-      @media (max-width:560px) { .topbar,.quick,.section,.cardTop { align-items:stretch; flex-direction:column; } .quick .primary,.section .secondary { width:100%; } .setRow { grid-template-columns:24px 1fr 1fr; } .setRow .secondary { grid-column:1/-1; } .sessionMeta,.historyControls,.records,.progressionGrid,.filterGrid,.timerGrid,.categoryGrid,.timerChoiceGrid,.neighborGrid { grid-template-columns:1fr; } .exercisePick { grid-template-columns:1fr; } .actionPair { justify-content:stretch; } .actionPair .primary,.actionPair .secondary,.navButtons .primary,.navButtons .secondary,.activeTimerButtons .primary,.activeTimerButtons .secondary { flex:1 1 0; } }
+      @media (max-width:560px) { .topbar,.quick,.cardTop { align-items:stretch; flex-direction:column; } .quick .primary { width:100%; } .section { align-items:center; } .section .secondary { width:auto; flex:0 0 auto; } .setRow { grid-template-columns:24px 1fr 1fr; } .setRow .secondary { grid-column:1/-1; } .sessionMeta,.historyControls,.records,.progressionGrid,.filterGrid,.timerGrid,.categoryGrid,.timerChoiceGrid,.neighborGrid { grid-template-columns:1fr; } .exercisePick { grid-template-columns:1fr; } .actionPair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:100%; } .actionPair .primary { grid-column:1/-1; } .actionPair .primary,.actionPair .secondary,.navButtons .primary,.navButtons .secondary,.activeTimerButtons .primary,.activeTimerButtons .secondary { width:100%; min-height:44px; } }
       @media (min-width:760px) { .cards { grid-template-columns:repeat(2,minmax(0,1fr)); } }
       @media (min-width:1040px) { .cards.three { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 
@@ -188,7 +189,7 @@
       .minimalFocus { place-content:center; text-align:center; }
       .minimalFocus .focusCue { display:grid; gap:6px; border:1px solid var(--line); border-radius:8px; padding:12px; background:rgba(255,255,255,.035); }
       .templateCard .historyRow { grid-template-columns:1fr auto; }
-      @media (max-width:560px) { .globalHome { top:8px; left:8px; } .topbar { padding-top:48px; padding-left:2px; } .randomWorkoutRow .secondary { width:100%; } .focusTop { align-items:stretch; flex-direction:column; } .focusBottom { display:grid; grid-template-columns:1fr; } .focusBottom .primary, .focusBottom .secondary { width:100%; min-height:50px; } .focusScreen .sessionMeta { grid-template-columns:1fr; } }
+      @media (max-width:560px) { .globalHome { top:8px; left:8px; } .topbar { padding:48px 2px 14px; } .randomWorkoutRow .secondary { width:100%; } .focusTop { align-items:center; flex-direction:row; } .focusBottom { display:grid; grid-template-columns:1fr; } .focusBottom .primary, .focusBottom .secondary { width:100%; min-height:50px; } .focusScreen .sessionMeta { grid-template-columns:1fr; } }
 
 @media (max-width:560px) { .favoriteEditRow { grid-template-columns:28px minmax(0,1fr); align-items:start; } .editActions { grid-column:2; flex-wrap:wrap; } .editAddRow { grid-template-columns:1fr; } .editSaveActions .primary,.editSaveActions .secondary { flex:1 1 100%; } }
 .settingsStack { display:grid; gap:12px; }
@@ -216,3 +217,18 @@ body.lightMode .commonSetControls { background:rgba(91,163,68,.08); }
 @media (max-width:560px) { .commonSetChoices .chip { flex:1 1 42px; } .customSetChoice { flex:1 1 112px; } }
 .commonSetConfirm { display:flex; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid rgba(141,224,111,.35); padding-top:10px; }
 @media (max-width:560px) { .commonSetConfirm { align-items:stretch; flex-direction:column; } }
+.stagePrompt,.completionScreen { align-content:center; text-align:center; }
+.stagePrompt h1,.completionScreen h1 { font-size:clamp(30px,9vw,54px); }
+.guidedPreview { display:grid; gap:7px; text-align:left; }
+.guidedPreview span { display:grid; grid-template-columns:30px 1fr; align-items:center; gap:8px; border:1px solid var(--line); border-radius:8px; padding:9px; background:rgba(255,255,255,.035); }
+.guidedPreview b { display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--strong); }
+.stageChoiceButtons { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.stageChoiceButtons button { min-height:58px; }
+.guidedStage { align-content:start; text-align:center; }
+.completionMessage { color:var(--accent); font-size:clamp(22px,7vw,36px); font-weight:1000; }
+.completionStats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; }
+.completionStats span { display:grid; gap:5px; border:1px solid var(--line); border-radius:8px; padding:12px 8px; background:rgba(255,255,255,.035); }
+.completionStats small { color:var(--muted); }
+.completionScreen label { display:grid; gap:8px; text-align:left; font-weight:900; }
+body.lightMode .guidedPreview span,body.lightMode .completionStats span { background:rgba(20,45,25,.035); }
+@media (max-width:560px) { .stageChoiceButtons { grid-template-columns:1fr; } .completionStats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
