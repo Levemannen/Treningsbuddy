@@ -82,6 +82,26 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         {id:"tpl-emergency-10",cat:"nodokt",name:"Nødøkt 10 minutter",duration:10,level:"Alle nivåer",desc:"En kort, effektiv helkroppsøkt som passer inn i en travel hverdag.",equipment:"Ingen utstyr",timerChoice:"interval",work:45,pause:15,rounds:2,ex:[["Air Squats",1,"45 sek"],["Pushups",1,"45 sek"],["Reverse Lunge",1,"45 sek"],["Mountain Climbers",1,"45 sek"],["Bird Dog",1,"45 sek"],["Bicycle crunch",1,"45 sek"]]},
         {id:"tpl-emergency-15",cat:"nodokt",name:"Nødøkt 15 minutter",duration:15,level:"Middels",desc:"Når du har et kvarter tilgjengelig og ønsker en komplett helkroppsøkt.",equipment:"Ingen utstyr",timerChoice:"interval",work:45,pause:15,rounds:2,ex:[["Jumping Jacks",1,"45 sek"],["Air Squats",1,"45 sek"],["Pushups",1,"45 sek"],["Mountain Climbers",1,"45 sek"],["Glute Bridge",1,"45 sek"],["Superman",1,"45 sek"],["Planke med skuldertouch",1,"45 sek"],["Bicycle crunch",1,"45 sek"]]}
       );
+      const exerciseNameChanges = {
+        "Alternating superman":"Alternating Superman","Archer pushup":"Archer Pushup","Archer Pushups":"Archer Pushup","Army crawl":"Army Crawl","Arnold press":"Arnold Press",
+        "Bench dips":"Benkdips","Bench Dips":"Benkdips","Bicepscurl":"Hantelcurl","Bicycle crunch":"Bicycle Crunch","Bird dog crunch":"Bird Dog Crunch","Butterfly situp":"Butterfly Situp",
+        "Close Grip Pushups":"Close-Grip Pushup","Close-grip pushup":"Close-Grip Pushup","Commandos":"Planke til albue (Commando Plank)","Planke til albue (commando plank)":"Planke til albue (Commando Plank)",
+        "Crab walk":"Crab Walk","Cross Body Shoulder Stretch":"Cross-Body Shoulder Stretch","Cuban raise":"Cuban Raise","Decline pushup":"Decline Pushup","Decline Pushups":"Decline Pushup",
+        "Diamond pushup":"Diamond Pushup","Diamond Pushups":"Diamond Pushup","Dragon flag":"Dragon Flag","Dumbbell bench press":"Dumbbell Bench Press","Hantelpress":"Dumbbell Bench Press",
+        "Dumbbell floor press":"Dumbbell Floor Press","Enarms Hantelroing":"Enarms Roing","Enarms landmine press":"Enarms Landmine Press","Enarms overhead extension":"Enarms Overhead Extension",
+        "Enbeins glute bridge":"Single Leg Glute Bridge","Enkeltbeins L-sit":"Enkeltbeins L-Sit","Facepull":"Face Pull","Floor press":"Floor Press","Hantel Skulderpress":"Skulderpress med manualer",
+        "Incline pushup":"Incline Pushup","Incline Pushups":"Incline Pushup","Landmine press":"Landmine Press","L-sit":"L-Sit","Oblique V-up":"Oblique V-Up",
+        "Overhead triceps extension":"Overhead Triceps Extension","Pike pushup":"Pike Pushup","Pike Pushups":"Pike Pushup","Push press":"Push Press","Pushups":"Pushup",
+        "Reverse Lunges":"Reverse Lunge","Ring pushup":"Ring Pushup","Ring Pushups":"Ring Pushup","RKC-planke":"RKC-Planke","Side crunch":"Side Crunch","Skull crushers":"Skull Crushers",
+        "Toe touch crunch":"Toe Touch Crunch","Toes to bar":"Toes To Bar","Tuck-up":"Tuck-Up","V-sit":"V-Sit","V-up":"V-Up","Y-raise":"Y-Raise","Z-press":"Z-Press"
+      };
+      Object.assign(exerciseNameChanges,{
+        "Back extension på gulv":"Back Extension på gulv","Bird dog med pause":"Bird Dog med pause","Cross-body crunch":"Cross-Body Crunch","Cross-body mountain climbers":"Cross-Body Mountain Climbers","Dead bug med arm og ben":"Dead Bug med arm og ben","Dead bug med armstrekk":"Dead Bug med armstrekk","Dead bug med benstrekk":"Dead Bug med benstrekk","Deficit handstand pushup":"Deficit Handstand Pushup","Deficit pushup":"Deficit Pushup","Elevated pike pushup":"Elevated Pike Pushup","Explosive pushup":"Explosive Pushup","Front lever raises":"Front Lever Raises","Front lever tuck":"Front Lever Tuck","Hand Release Pushups":"Hand Release Pushup","Heel touch crunch":"Heel Touch Crunch","Hip thrust (kroppsvekt)":"Hip Thrust (kroppsvekt)","Hollow body flutter kicks":"Hollow Body Flutter Kicks","Hollow body scissors":"Hollow Body Scissors","Hollow rocks":"Hollow Rocks","Hollow tuck hold":"Hollow Tuck Hold","Jackknife situp":"Jackknife Situp","Kettlebell floor press":"Kettlebell Floor Press","Kettlebell press":"Kettlebell Press","Kettlebell push press":"Kettlebell Push Press","Knee pushup":"Knee Pushup","Landmine thruster":"Landmine Thruster","Lean-away lateral raise":"Lean-Away Lateral Raise","Leg raise hold":"Leg Raise Hold","Leopard crawl":"Leopard Crawl","Oblique crunch":"Oblique Crunch","One-arm pushup":"One-Arm Pushup","Pin press":"Pin Press","Plank jacks":"Plank Jacks","Plate raise":"Plate Raise","Reverse leg raise":"Reverse Leg Raise","Ring dips":"Ring Dips","Shoulder Tap Pushups":"Shoulder Tap Pushup","Superman hold":"Superman Hold","Straight bar dips":"Straight Bar Dips","Tuck hold":"Tuck Hold","Tuck sit":"Tuck Sit","Wall handstand pushup":"Wall Handstand Pushup","Wide pushup":"Wide Pushup","Windshield wipers":"Windshield Wipers"
+      });
+      const standardExerciseName = name => exerciseNameChanges[name] || name;
+      favorites.splice(0,favorites.length,...favorites.map(standardExerciseName));
+      Object.values(groups).forEach(group=>Object.keys(group).forEach(key=>{group[key]=group[key].map(standardExerciseName);}));
+      [...templates,...workoutTemplates].forEach(workout=>{workout.ex=workout.ex.map(item=>[standardExerciseName(item[0]),...item.slice(1)]);});
       const builtInTemplates = [...templates,...workoutTemplates];      const allNames = [...new Set([...favorites,...Object.values(groups).flatMap(g=>Object.values(g).flat()),...builtInTemplates.flatMap(t=>t.ex.map(x=>x[0]))])].sort((a,b)=>a.localeCompare(b,"no"));
       const filterData = {
         muscles:["Bryst","Rygg","Skuldre","Biceps","Triceps","Underarm","Mage","Korsrygg","Sete","Fremside lår","Bakside lår","Legger","Full kropp"],
@@ -117,6 +137,15 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
       };
       const storeKey = "treningsbanken-static-v3";
       let state = JSON.parse(localStorage.getItem(storeKey) || '{"tab":"home","builder":[],"builderName":"Egen økt","builderCat":"favoritter","sessions":[],"notes":{},"plan":{"monday":"push-60","wednesday":"pull-60","friday":"fullbody-styrke"},"energy":3,"sleep":3,"effort":"middels","pain":"","comment":"","rest":{}}');
+      const standardizeStoredEntries = entries => (entries||[]).map(item=>Array.isArray(item)?[standardExerciseName(item[0]),...item.slice(1)]:{...item,name:standardExerciseName(item.name)});
+      const standardizeNamedObject = source => Object.entries(source||{}).reduce((result,[name,value])=>{result[standardExerciseName(name)]=value;return result;},{});
+      state.builder=standardizeStoredEntries(state.builder);
+      state.savedPrograms=(state.savedPrograms||[]).map(program=>({...program,ex:standardizeStoredEntries(program.ex)}));
+      state.sessions=(state.sessions||[]).map(session=>({...session,ex:standardizeStoredEntries(session.ex)}));
+      state.notes=standardizeNamedObject(state.notes);
+      state.exerciseVideos=standardizeNamedObject(state.exerciseVideos);
+      state.youtubeSearches=standardizeNamedObject(state.youtubeSearches);
+      state.detailName=standardExerciseName(state.detailName||"");
       state.favoriteTemplates = state.favoriteTemplates || [];
       state.savedPrograms = state.savedPrograms || [];
       if(state.tab==="builder"&&!['active','paused'].includes(state.builderMode)){state.tab="home";state.builder=[];state.builderStep="category";state.builderName="Ny økt";state.justAdded="";}
@@ -145,7 +174,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
       const view = document.querySelector("#view");
       const save = () => localStorage.setItem(storeKey, JSON.stringify(state));
       const newSet = (target="") => ({id:crypto.randomUUID(),target});
-      const entry = (name, sets=3, reps="") => ({name, setCount:Math.max(1,Number(sets)||1), targetReps:reps, rest:90, mode:String(reps).includes("/")||String(reps).includes("sek")?"intervall":"styrke", work:String(reps).includes("20/10")?20:String(reps).includes("40/20")?40:45, pause:String(reps).includes("20/10")?10:String(reps).includes("40/20")?20:15, rounds:3, note:""});
+      const entry = (name, sets=3, reps="") => ({name:standardExerciseName(name), setCount:Math.max(1,Number(sets)||1), targetReps:reps, rest:90, mode:String(reps).includes("/")||String(reps).includes("sek")?"intervall":"styrke", work:String(reps).includes("20/10")?20:String(reps).includes("40/20")?40:45, pause:String(reps).includes("20/10")?10:String(reps).includes("40/20")?20:15, rounds:3, note:""});
       if(!state.seededPushFavoriteV1){
         state.savedPrograms.unshift({id:"favorite-push-requested-v1",name:"Push favoritt",cat:"push",duration:50,timerChoice:"none",ex:[entry("Benkpress",3,"6-8"),entry("Skrå hantelpress",3,"8-12"),entry("Skulderpress med stang",3,"6-10"),entry("Sidehev",3,"12-15"),entry("Dips",3,"6-10"),entry("Triceps pushdown",3,"10-12"),entry("Overhead Triceps Extension",3,"12-15"),entry("Pushups",3,"Til utmattelse")],date:new Date().toISOString()});
         state.seededPushFavoriteV1=true;
@@ -591,7 +620,17 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         document.querySelector("#soundVolume").oninput=e=>{state.soundVolume=Number(e.target.value);document.querySelector("#volumeValue").textContent=`${state.soundVolume}%`;save();};
         document.querySelector("#countdownSound").onchange=e=>{state.countdownSound=e.target.checked;save();};
         document.querySelector("#testSound").onclick=()=>playAppSound("work");
-      }      function render() {
+      }
+      let historyReady=false,restoringHistory=false,pendingHistoryBack=false,historySequence=0,historyTrail=[],backPromptOpen=false;
+      const navigationKey = source => {const s=source||state;if(s.tab==="builder")return ["builder",s.builderMode||"build",s.builderStep||"category",s.builderPickCat||s.builderCat||"",s.builderMode==="active"?(s.workoutStage||"active"):"",s.builderStep==="edit"?(s.editingProgramId||""):""].join(":");if(s.tab==="favworkouts")return `favworkouts:${s.favoriteCategory||"categories"}`;if(s.tab==="templates")return `templates:${s.templateCategory||"categories"}`;if(s.tab==="detail")return `detail:${s.detailName||""}`;return s.tab||"home";};
+      const navigationSnapshot = () => JSON.parse(JSON.stringify(state));
+      const navigationEntry = () => ({treningsbuddy:true,id:`tb-${Date.now()}-${++historySequence}`,key:navigationKey(),snapshot:navigationSnapshot()});
+      const closeBackPrompt = () => {document.querySelector("#androidBackPrompt")?.remove();backPromptOpen=false;};
+      const showWorkoutBackPrompt = () => {if(backPromptOpen)return;backPromptOpen=true;document.body.insertAdjacentHTML("beforeend",`<div class="backPromptOverlay" id="androidBackPrompt"><section class="backPrompt" role="dialog" aria-modal="true" aria-labelledby="backPromptTitle"><h2 id="backPromptTitle">Vil du pause eller avslutte økten?</h2><p>Økten er fortsatt aktiv.</p><div class="backPromptActions"><button class="primary" id="continueActiveWorkout">Fortsett økt</button><button class="secondary" id="pauseActiveWorkout">Pause / åpne bygger</button><button class="secondary dangerAction" id="endActiveWorkout">Avslutt økt</button></div></section></div>`);document.querySelector("#continueActiveWorkout").onclick=closeBackPrompt;document.querySelector("#pauseActiveWorkout").onclick=()=>{closeBackPrompt();pauseWorkoutTimer();state.builderStep="exercises";state.builderMode="paused";save();render();};document.querySelector("#endActiveWorkout").onclick=()=>{closeBackPrompt();pauseWorkoutTimer();showCompletion();};document.querySelector("#continueActiveWorkout").focus();};
+      const syncAppHistory = () => {const key=navigationKey();if(restoringHistory){restoringHistory=false;return;}if(pendingHistoryBack)return;if(!historyReady){const entry=navigationEntry();history.replaceState(entry,"",location.href);historyTrail=[entry];historyReady=true;return;}const current=historyTrail[historyTrail.length-1];if(current?.key===key){const updated={...current,snapshot:navigationSnapshot()};history.replaceState(updated,"",location.href);historyTrail[historyTrail.length-1]=updated;return;}const previous=historyTrail[historyTrail.length-2];if(previous?.key===key){pendingHistoryBack=true;history.back();return;}const entry=navigationEntry();historyTrail.push(entry);history.pushState(entry,"",location.href);};
+      window.addEventListener("popstate",event=>{const programmaticBack=pendingHistoryBack;pendingHistoryBack=false;if(!programmaticBack&&navigationKey()==="home"&&event.state?.treningsbuddy){history.go(-Math.max(1,historyTrail.length-1));return;}const active=state.tab==="builder"&&state.builderMode==="active";if(active){const current=navigationEntry();history.pushState(current,"",location.href);historyTrail.push(current);showWorkoutBackPrompt();return;}const entry=event.state;if(entry?.treningsbuddy&&entry.snapshot){const match=historyTrail.findIndex(item=>item.id===entry.id);historyTrail=match>=0?historyTrail.slice(0,match+1):[entry];restoringHistory=true;state=JSON.parse(JSON.stringify(entry.snapshot));save();render();return;}if(navigationKey()!=="home"){state.tab="home";state.builderMode="build";state.builderStep="category";state.builder=[];restoringHistory=true;save();render();}});
+      function render() {
+        syncAppHistory();
         const homeActive=state.tab==="home";document.body.classList.toggle("homeScreenActive",homeActive);document.querySelector(".topbar").innerHTML=homeActive?`<div class="homeBrand"><h1>TRENINGSBUDDY</h1><p>Din trener. Din plan. Dine resultater.</p></div>`:`<div><p class="eyebrow">treningsbuddy</p><h1>Min økt</h1></div>`;
         document.body.classList.toggle("lightMode",state.theme==="light");document.querySelector('meta[name="theme-color"]')?.setAttribute("content",state.theme==="light"?"#f4f6f3":"#0a0d10");
         const focusActive = state.tab==="builder" && state.builderMode==="active";
