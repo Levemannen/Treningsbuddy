@@ -360,8 +360,23 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
       const flowIcons={push:`<path d="M3 10v4M6 8v8M18 8v8M21 10v4M6 12h12"/>`,pull:`<path d="M4 5h16M6 3v4M18 3v4"/><circle cx="12" cy="9" r="2"/><path d="M8 8c0 3 1 4 4 4s4-1 4-4M9 21l3-9 3 9"/>`,fullbody:`<circle cx="12" cy="4" r="2"/><path d="M12 6v7M6 9l6 2 6-2M8 21l4-8 4 8"/>`,crosstrening:`<path d="m13 2-8 12h7l-1 8 8-12h-7z"/>`,kroppsvekt:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6M5 9l7 3 7-3M8 21l4-9 4 9"/>`,tabata:`<circle cx="12" cy="13" r="8"/><path d="M9 2h6M12 5v3M12 13l3-2"/>`,core:`<path d="M8 3c-2 3-2 6 0 9-2 3-1 7 2 9M16 3c2 3 2 6 0 9 2 3 1 7-2 9M8 8h8M8 16h8"/>`,morgen:`<path d="M4 18h16M6 15a6 6 0 0 1 12 0M12 3v4M4.9 7.9l2.8 2.8M19.1 7.9l-2.8 2.8"/>`,toying:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6l-5 4M12 10l5 3M7 16l-2 5M17 13l2 8"/>`,nodokt:`<path d="M12 3 2.8 20h18.4zM12 9v5M12 17h.01"/>`};
       const flowIcon=id=>`<svg viewBox="0 0 24 24" aria-hidden="true">${flowIcons[id]||flowIcons.fullbody}</svg>`;
       const flowSelectionHeader=title=>`<header class="flowSelectionHeader"><button class="flowBack" id="backHome" aria-label="Tilbake"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button><div><p class="flowBrand">TRENINGSBUDDY</p><h2>${title}</h2><p class="flowSubtitle">Velg treningsform</p></div></header>`;
-      const flowSelectionCard=(id,label,status,attribute)=>`<button class="flowCategoryCard" data-flow-id="${id}" ${attribute}="${id}"><span class="flowCategoryIcon">${flowIcon(id)}</span><span class="flowCategoryCopy"><strong>${label}</strong><small>${status}</small></span><span class="flowCategoryArrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span></button>`;
-      const flowSelectionPage=(title,cards)=>`${flowSelectionHeader(title)}<div class="flowCategoryGrid">${cards}</div>`;
+      function TrainingCategoryCard({id,title,subtitle,icon,selected=false,onClick}) {
+        const button=document.createElement("button");
+        button.type="button";
+        button.className=`flowCategoryCard${selected?" isSelected":""}`;
+        button.dataset.flowId=id;
+        button.setAttribute("aria-label",`${title}, ${subtitle}`);
+        if(selected)button.setAttribute("aria-current","true");
+        button.innerHTML=`<span class="flowCategoryIcon">${icon||flowIcon(id)}</span><span class="flowCategoryCopy"><strong>${title}</strong><small>${subtitle}</small></span><span class="flowCategoryArrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>`;
+        if(typeof onClick==="function")button.addEventListener("click",onClick);
+        return button;
+      }
+      function renderTrainingCategorySelection({title,categories,onBack}) {
+        view.innerHTML=`${flowSelectionHeader(title)}<div class="flowCategoryGrid"></div>`;
+        document.querySelector("#backHome").onclick=onBack;
+        const grid=view.querySelector(".flowCategoryGrid");
+        categories.forEach(category=>grid.append(TrainingCategoryCard(category)));
+      }
 
       function renderHome() {
         const count=(state.savedPrograms||[]).length;
@@ -375,9 +390,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
       }      function renderFavoriteWorkouts() {
         const allPrograms=state.savedPrograms||[];
         if(!state.favoriteCategory){
-          view.innerHTML=flowSelectionPage("Favorittøkter",flowOptions.map(([id,label])=>{const count=allPrograms.filter(p=>p.cat===id).length;return flowSelectionCard(id,label,count?`${count} ${count===1?"økt":"økter"}`:"Ingen økter","data-favorite-cat");}).join(""));
-          document.querySelector("#backHome").onclick=()=>{state.tab="home";save();render();};
-          document.querySelectorAll("[data-favorite-cat]").forEach(b=>b.onclick=()=>{state.favoriteCategory=b.dataset.favoriteCat;save();render();});
+          renderTrainingCategorySelection({title:"Favorittøkter",onBack:()=>{state.tab="home";save();render();},categories:flowOptions.map(([id,title])=>{const count=allPrograms.filter(p=>p.cat===id).length;return {id,title,subtitle:count?`${count} ${count===1?"økt":"økter"}`:"Ingen økter",onClick:()=>{state.favoriteCategory=id;save();render();}};})});
           return;
         }
         const programs=allPrograms.filter(p=>p.cat===state.favoriteCategory);
@@ -391,9 +404,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         document.querySelectorAll("[data-duplicate-program]").forEach(b=>{const p=programs.find(x=>x.id===b.dataset.duplicateProgram);b.onclick=()=>{if(!p)return;state.savedPrograms.unshift({...p,id:crypto.randomUUID(),sourceTemplateId:undefined,name:`${p.name} kopi`,date:new Date().toISOString()});save();render();};});
         bindCommon();
       }      function renderFlowCategory() {
-        view.innerHTML=flowSelectionPage("Lag økt",flowOptions.map(([id,label])=>{const count=poolFor(id).length;return flowSelectionCard(id,label,`${count} øvelser`,"data-flow-cat");}).join(""));
-        document.querySelector("#backHome").onclick=()=>{state.tab="home"; save(); render();};
-        document.querySelectorAll("[data-flow-cat]").forEach(b=>b.onclick=()=>setFlowCategory(b.dataset.flowCat));
+        renderTrainingCategorySelection({title:"Lag økt",onBack:()=>{state.tab="home";save();render();},categories:flowOptions.map(([id,title])=>({id,title,subtitle:`${poolFor(id).length} øvelser`,onClick:()=>setFlowCategory(id)}))});
       }
       function applyTimerToBuilder() {
         if(state.timerChoice==="none") return;
@@ -607,9 +618,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
       const startBuiltInTemplate = t => {const defaults=timerDefaults(t.cat);state.globalWork=t.work||defaults.work;state.globalPause=t.pause??defaults.pause;state.globalRounds=t.rounds||defaults.rounds;state.pauseBetween=0;beginWorkout(t.name,t.cat,templateToEntries(t),templateTimerChoice(t));};
       function renderWorkoutTemplates() {
         if(!state.templateCategory){
-          view.innerHTML=flowSelectionPage("Maler",flowOptions.map(([id,label])=>{const count=builtInTemplates.filter(t=>t.cat===id).length;return flowSelectionCard(id,label,count?`${count} ${count===1?"mal":"maler"}`:"Ingen maler","data-template-cat");}).join(""));
-          document.querySelector("#backHome").onclick=()=>{state.tab="home";save();render();};
-          view.querySelectorAll("[data-template-cat]").forEach(button=>button.addEventListener("click",()=>{state.templateCategory=button.dataset.templateCat;state.templateNotice="";save();render();}));
+          renderTrainingCategorySelection({title:"Maler",onBack:()=>{state.tab="home";save();render();},categories:flowOptions.map(([id,title])=>{const count=builtInTemplates.filter(t=>t.cat===id).length;return {id,title,subtitle:count?`${count} ${count===1?"mal":"maler"}`:"Ingen maler",onClick:()=>{state.templateCategory=id;state.templateNotice="";save();render();}};})});
           return;
         }
         const list=builtInTemplates.filter(t=>t.cat===state.templateCategory);
