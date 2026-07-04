@@ -9,6 +9,8 @@ Last opp disse filene direkte i hovedmappen/root i GitHub-repositoryet:
 - `index.html`
 - `app.js`
 - `app.css`
+- `description-loader.js`
+- `exerciseDescriptions.json`
 - `icon.svg`
 - `manifest.webmanifest`
 - `sw.js`
@@ -45,6 +47,8 @@ Alle nødvendige appfiler ligger direkte i hovedmappen. Filstiene er relative:
 
 - `./app.js`
 - `./app.css`
+- `./description-loader.js`
+- `./exerciseDescriptions.json`
 - `./icon.svg`
 - `./manifest.webmanifest`
 - `./sw.js`
