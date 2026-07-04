@@ -334,11 +334,17 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         document.querySelectorAll("[data-copy]").forEach(b=>{const t=templates.find(x=>x.id===b.dataset.copy); b.onclick=()=>{state.builderName=`${t.name} kopi`; state.builder=t.ex.map(x=>entry(x[0],x[1],x[2])); state.builderCat=t.cat; state.builderMode="build"; state.tab="builder"; save(); render();};});
         document.querySelectorAll("[data-fav-template]").forEach(b=>b.onclick=()=>toggleTemplateFavorite(b.dataset.favTemplate));
       }
+      const resetDetailScroll = () => {
+        const scrollToTop=()=>{window.scrollTo(0,0);if(document.scrollingElement)document.scrollingElement.scrollTop=0;document.documentElement.scrollTop=0;document.body.scrollTop=0;};
+        scrollToTop();
+        requestAnimationFrame(()=>{scrollToTop();requestAnimationFrame(scrollToTop);});
+      };
       function renderDetail() {
         const name=state.detailName&&allNames.includes(state.detailName)?state.detailName:allNames[0];
         view.innerHTML=`<div class="section detailNav"><button class="secondary" id="backDetail">Tilbake</button></div><article class="panel detailPanel"><h2>${name}</h2>${profile(name)}</article>`;
         document.querySelector("#backDetail").onclick=()=>{state.tab=state.detailBack||"bank";save();render();};
         bindCommon();
+        resetDetailScroll();
       }      const templatePrescription = x => {const sets=x[1]?`${x[1]} sett`:"",target=String(x[2]||"").trim();return [sets,target.toLowerCase()==="sett"?"":target].filter(Boolean).join(" · ");};
       function templateCard(t) { const fav=(state.favoriteTemplates||[]).includes(t.id); return `<article class="panel grid ${fav?"favoriteCard":""}"><div class="cardTop"><div><h3>${fav?"Favoritt · ":""}${t.name}</h3><p class="muted">${t.desc||""}</p></div><div class="buttons">${t.duration?`<span class="pill">${t.duration} min</span>`:""}<button class="icon" data-fav-template="${t.id}" title="Favoritt">${fav?"★":"☆"}</button></div></div><div class="meta"><span><strong>Kategori:</strong> ${flowLabel(t.cat)}</span><span><strong>Øvelser:</strong> ${t.ex.length}</span></div><div class="list">${t.ex.map(x=>`<div class="historyRow clickableRow"><button class="textButton" data-detail="${x[0]}">${x[0]}</button><span class="muted">${templatePrescription(x)}</span></div>`).join("")}</div><div class="buttons actionPair"><button class="primary" data-start="${t.id}">Start økt</button><button class="secondary" data-copy="${t.id}">Dupliser og rediger</button></div></article>`; }
       const estimatedProgramMinutes = p => p.duration || (p.timerChoice!=="none" ? Math.max(1,Math.round((p.ex||[]).reduce((sum,e)=>sum+((Number(e.work)||state.globalWork||40)+(Number(e.pause)||state.globalPause||20))*(Number(e.rounds)||state.globalRounds||3),0)/60)) : Math.max(10,(p.ex||[]).length*6));
@@ -351,10 +357,10 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         view.innerHTML=`<div class="section"><h2>${tabs.find(t=>t[0]===cat)[1]}</h2></div>${tpl?`<div class="cards">${tpl}</div>`:""}${groupHtml?`<div class="cards">${groupHtml}</div>`:""}`;
         bindCommon();
       }
-      const flowIcons={push:`<path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/>`,pull:`<path d="M4 7h16M4 17h16M8 3 4 7l4 4M16 13l4 4-4 4"/>`,fullbody:`<circle cx="12" cy="5" r="2"/><path d="M12 7v7M7 10l5 2 5-2M9 21l3-7 3 7"/>`,crosstrening:`<path d="m13 2-8 12h7l-1 8 8-12h-7z"/>`,kroppsvekt:`<circle cx="8" cy="6" r="2"/><path d="m4 20 3-7 5-2 4 3 4 1M7 13l-3-3"/>`,tabata:`<circle cx="12" cy="13" r="8"/><path d="M9 2h6M12 5v3M12 13l3-2"/>`,core:`<path d="M8 3c-2 3-2 6 0 9-2 3-1 7 2 9M16 3c2 3 2 6 0 9 2 3 1 7-2 9M8 8h8M8 16h8"/>`,morgen:`<path d="M4 18h16M6 15a6 6 0 0 1 12 0M12 3v4M4.9 7.9l2.8 2.8M19.1 7.9l-2.8 2.8"/>`,toying:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6l-5 4M12 10l5 3M7 16l-2 5M17 13l2 8"/>`,nodokt:`<path d="M12 3 2.8 20h18.4zM12 9v5M12 17h.01"/>`};
+      const flowIcons={push:`<path d="M3 10v4M6 8v8M18 8v8M21 10v4M6 12h12"/>`,pull:`<path d="M4 5h16M6 3v4M18 3v4"/><circle cx="12" cy="9" r="2"/><path d="M8 8c0 3 1 4 4 4s4-1 4-4M9 21l3-9 3 9"/>`,fullbody:`<circle cx="12" cy="4" r="2"/><path d="M12 6v7M6 9l6 2 6-2M8 21l4-8 4 8"/>`,crosstrening:`<path d="m13 2-8 12h7l-1 8 8-12h-7z"/>`,kroppsvekt:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6M5 9l7 3 7-3M8 21l4-9 4 9"/>`,tabata:`<circle cx="12" cy="13" r="8"/><path d="M9 2h6M12 5v3M12 13l3-2"/>`,core:`<path d="M8 3c-2 3-2 6 0 9-2 3-1 7 2 9M16 3c2 3 2 6 0 9 2 3 1 7-2 9M8 8h8M8 16h8"/>`,morgen:`<path d="M4 18h16M6 15a6 6 0 0 1 12 0M12 3v4M4.9 7.9l2.8 2.8M19.1 7.9l-2.8 2.8"/>`,toying:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6l-5 4M12 10l5 3M7 16l-2 5M17 13l2 8"/>`,nodokt:`<path d="M12 3 2.8 20h18.4zM12 9v5M12 17h.01"/>`};
       const flowIcon=id=>`<svg viewBox="0 0 24 24" aria-hidden="true">${flowIcons[id]||flowIcons.fullbody}</svg>`;
       const flowSelectionHeader=title=>`<header class="flowSelectionHeader"><button class="flowBack" id="backHome" aria-label="Tilbake"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button><div><p class="flowBrand">TRENINGSBUDDY</p><h2>${title}</h2><p class="flowSubtitle">Velg treningsform</p></div></header>`;
-      const flowSelectionCard=(id,label,status,attribute)=>`<button class="flowCategoryCard" ${attribute}="${id}"><span class="flowCategoryIcon">${flowIcon(id)}</span><span class="flowCategoryCopy"><strong>${label}</strong><small>${status}</small></span><span class="flowCategoryArrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span></button>`;
+      const flowSelectionCard=(id,label,status,attribute)=>`<button class="flowCategoryCard" data-flow-id="${id}" ${attribute}="${id}"><span class="flowCategoryIcon">${flowIcon(id)}</span><span class="flowCategoryCopy"><strong>${label}</strong><small>${status}</small></span><span class="flowCategoryArrow"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span></button>`;
       const flowSelectionPage=(title,cards)=>`${flowSelectionHeader(title)}<div class="flowCategoryGrid">${cards}</div>`;
 
       function renderHome() {
