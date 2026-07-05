@@ -43,15 +43,6 @@
       .compactFlowChoice small { color:var(--muted); opacity:1; font-size:12px; }
       .emptyCategory { display:grid; gap:10px; text-align:center; }
       .emptyCategory .actionPair { justify-content:center; }
-      .favoriteEditList { display:grid; gap:8px; }
-      .favoriteEditRow { display:grid; grid-template-columns:32px minmax(0,1fr) auto; gap:10px; align-items:center; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.035); padding:10px; }
-      .editOrder { display:grid; place-items:center; width:30px; height:30px; border-radius:50%; background:var(--strong); color:var(--muted); font-weight:900; }
-      .editExercise { display:grid; gap:8px; min-width:0; }
-      .editExercise label { display:grid; gap:4px; color:var(--muted); font-size:12px; font-weight:800; }
-      .editActions { display:flex; gap:6px; align-items:center; }
-      .editAddExercise { display:grid; gap:8px; border-top:1px solid var(--line); padding-top:12px; }
-      .editAddRow { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; }
-      .editSaveActions { position:sticky; bottom:8px; padding:8px; border:1px solid var(--line); border-radius:8px; background:rgba(10,13,16,.94); }
       .timerChoiceGrid { grid-template-columns:repeat(3,minmax(0,1fr)); }
       .muted { color:var(--muted); }
       .primary,.secondary,.icon { display:inline-flex; align-items:center; justify-content:center; gap:8px; }
@@ -213,7 +204,6 @@
       .templateCard .historyRow { grid-template-columns:1fr auto; }
       @media (max-width:560px) { .globalHome { top:8px; left:8px; } .topbar { padding:48px 2px 14px; } .randomWorkoutRow .secondary { width:100%; } .focusTop { align-items:center; flex-direction:row; } .focusBottom { display:grid; grid-template-columns:1fr; } .focusBottom .primary, .focusBottom .secondary { width:100%; min-height:50px; } .focusScreen .sessionMeta { grid-template-columns:1fr; } }
 
-@media (max-width:560px) { .favoriteEditRow { grid-template-columns:28px minmax(0,1fr); align-items:start; } .editActions { grid-column:2; flex-wrap:wrap; } .editAddRow { grid-template-columns:1fr; } .editSaveActions .primary,.editSaveActions .secondary { flex:1 1 100%; } }
 .settingsStack { display:grid; gap:12px; }
 .settingsGroup { display:grid; gap:16px; }
 .settingRow,.volumeSetting>span { display:flex; align-items:center; justify-content:space-between; gap:12px; }
@@ -228,9 +218,9 @@ body.lightMode { color-scheme:light; --bg:#f4f6f3; --panel:#ffffff; --strong:#ed
 body.lightMode .quick,body.lightMode .panel { background:rgba(255,255,255,.97); box-shadow:0 12px 30px rgba(28,45,31,.1); }
 body.lightMode .tab,body.lightMode .globalHome { background:#fff; }
 body.lightMode input,body.lightMode textarea,body.lightMode select { background:#fff; color:var(--text); }
-body.lightMode .exercisePick,body.lightMode .historyRow,body.lightMode .bankLine,body.lightMode .builderLine,body.lightMode .setRow,body.lightMode .favoriteEditRow,body.lightMode .focusBlock { background:rgba(20,45,25,.035); }
+body.lightMode .exercisePick,body.lightMode .historyRow,body.lightMode .bankLine,body.lightMode .builderLine,body.lightMode .setRow,body.lightMode .focusBlock { background:rgba(20,45,25,.035); }
 body.lightMode .focusScreen { background:linear-gradient(180deg,rgba(91,163,68,.1),rgba(255,255,255,.98) 220px); }
-body.lightMode .focusBottom,body.lightMode .editSaveActions { background:rgba(255,255,255,.94); }
+body.lightMode .focusBottom { background:rgba(255,255,255,.94); }
 @media (max-width:560px) { .settingRow { align-items:flex-start; flex-direction:column; } .segmented { width:100%; } .segmented .chip { flex:1; } }.commonSetControls { display:grid; gap:10px; border:1px solid rgba(141,224,111,.42); border-radius:8px; background:rgba(141,224,111,.07); padding:12px; }
 .commonSetChoices { display:flex; flex-wrap:wrap; align-items:end; gap:7px; }
 .customSetChoice { display:grid; gap:4px; min-width:112px; color:var(--muted); font-size:12px; font-weight:800; }
@@ -298,11 +288,9 @@ body.lightMode .homeMenuPrimary .homeMenuCopy small { color:rgba(7,16,7,.7); }
 
 body.flowSelectionActive { background:radial-gradient(circle at 45% 0,rgba(38,103,62,.1),transparent 260px),#050a0d; }
 body.flowSelectionActive .globalHome,body.flowSelectionActive .topbar { display:none; }
-body.flowSelectionActive .app { width:min(100%,560px); padding:22px 17px 28px; }
-.flowSelectionHeader { display:grid; grid-template-columns:42px minmax(0,1fr); align-items:start; gap:14px; margin-bottom:22px; }
-.flowBack { width:44px; height:44px; display:grid; place-items:center; color:#aeb7bd; background:transparent; border-radius:8px; cursor:pointer; }
-.flowBack:hover,.flowBack:focus-visible { color:var(--accent); background:rgba(141,224,111,.08); outline:0; }
-.flowBack svg,.flowCategoryArrow svg { width:25px; height:25px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+body.flowSelectionActive .app { width:min(100%,560px); padding:14px 17px 28px; }
+.flowSelectionHeader { display:block; margin-bottom:18px; }
+.flowCategoryArrow svg { width:25px; height:25px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .flowBrand { margin:4px 0 9px; color:var(--accent); font-size:12px; line-height:1; font-weight:1000; }
 .flowSelectionHeader h2 { font-size:34px; line-height:1.05; font-weight:1000; }
 .flowSubtitle { margin-top:6px; color:#b6bdc2; font-size:15px; line-height:1.2; font-weight:700; }
@@ -322,7 +310,7 @@ body.flowSelectionActive .app { width:min(100%,560px); padding:22px 17px 28px; }
 body.lightMode.flowSelectionActive { background:#f4f6f3; }
 body.lightMode .flowCategoryCard { background:#fff; border-color:var(--line); box-shadow:0 10px 24px rgba(28,45,31,.08); }
 body.lightMode .flowSubtitle,body.lightMode .flowCategoryCopy small { color:var(--muted); }
-@media (max-width:380px) { body.flowSelectionActive .app { padding:18px 12px 24px; } .flowSelectionHeader { grid-template-columns:38px minmax(0,1fr); gap:9px; margin-bottom:18px; } .flowBack { width:38px; height:38px; } .flowSelectionHeader h2 { font-size:31px; } .flowCategoryGrid { gap:7px; } .flowCategoryCard { min-height:108px; padding:11px 9px 9px; } .flowCategoryCopy strong { font-size:16px; } .flowCategoryCard[data-flow-id="morgen"] .flowCategoryCopy strong { font-size:13px; } .flowCategoryCopy small { font-size:11px; } }
+@media (max-width:380px) { body.flowSelectionActive .app { padding:12px 12px 24px; } .flowSelectionHeader { margin-bottom:16px; } .flowSelectionHeader h2 { font-size:31px; } .flowCategoryGrid { gap:7px; } .flowCategoryCard { min-height:108px; padding:11px 9px 9px; } .flowCategoryCopy strong { font-size:16px; } .flowCategoryCard[data-flow-id="morgen"] .flowCategoryCopy strong { font-size:13px; } .flowCategoryCopy small { font-size:11px; } }
 
 .globalHome { display:inline-flex; align-items:center; gap:8px; }
 .startPlay { width:19px; height:19px; fill:none; stroke:var(--accent); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
