@@ -286,31 +286,39 @@ body.lightMode .homeMenuPrimary .homeMenuCopy small { color:rgba(7,16,7,.7); }
 .homeMenuPrimary .homeMenuIcon svg { width:36px; height:36px; stroke-width:1.8; }
 .homeMenuArrow svg { width:24px; height:24px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 
-body.flowSelectionActive { background:radial-gradient(circle at 45% 0,rgba(38,103,62,.1),transparent 260px),#050a0d; }
+body.flowSelectionActive { overflow-x:hidden; background:radial-gradient(ellipse at 82% 8%,rgba(47,176,60,.13),transparent 250px),radial-gradient(circle at 45% 0,rgba(38,103,62,.08),transparent 260px),#050a0d; }
 body.flowSelectionActive .globalHome,body.flowSelectionActive .topbar { display:none; }
 body.flowSelectionActive .app { width:min(100%,560px); padding:14px 17px 28px; }
-.flowSelectionHeader { display:block; margin-bottom:18px; }
+.flowSelectionHeader { position:relative; display:block; margin-bottom:26px; padding:24px 2px 0; }
+.flowSelectionHeader::after { content:""; position:absolute; z-index:-1; width:310px; height:150px; top:-34px; right:-40px; opacity:.65; background:radial-gradient(ellipse at center,rgba(89,255,68,.14),rgba(89,255,68,.035) 44%,transparent 72%); transform:rotate(-11deg); pointer-events:none; }
+.flowHeaderBar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:20px; }
+.flowInfo { width:42px; height:42px; display:grid; place-items:center; color:#9cff65; border:1px solid rgba(141,224,111,.13); border-radius:50%; background:rgba(7,14,17,.58); box-shadow:0 0 18px rgba(141,224,111,.05); }
+.flowInfo svg { width:25px; height:25px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
 .flowCategoryArrow svg { width:25px; height:25px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-.flowBrand { margin:4px 0 9px; color:var(--accent); font-size:12px; line-height:1; font-weight:1000; }
-.flowSelectionHeader h2 { font-size:34px; line-height:1.05; font-weight:1000; }
-.flowSubtitle { margin-top:6px; color:#b6bdc2; font-size:15px; line-height:1.2; font-weight:700; }
-.flowCategoryGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
-.flowCategoryCard { position:relative; overflow:hidden; min-width:0; min-height:112px; display:grid; grid-template-columns:minmax(0,1fr) 20px; grid-template-rows:40px auto; align-items:center; gap:3px 6px; color:var(--text); background:radial-gradient(circle at 84% 22%,rgba(141,224,111,.045),transparent 40%),linear-gradient(145deg,#11191e,#151b20 72%); border:1px solid #2b353d; border-radius:8px; padding:12px 12px 10px; text-align:left; box-shadow:0 8px 20px rgba(0,0,0,.22); cursor:pointer; transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease,background-color .16s ease; -webkit-tap-highlight-color:transparent; }
-.flowCategoryCard::before { content:""; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),rgba(141,224,111,.14) 68%,transparent); }
-.flowCategoryCard:hover,.flowCategoryCard:focus-visible,.flowCategoryCard.isSelected { transform:translateY(-1px); border-color:rgba(141,224,111,.56); box-shadow:0 11px 25px rgba(0,0,0,.3),0 0 18px rgba(141,224,111,.07); outline:0; }
-.flowCategoryCard:active { transform:scale(.985); border-color:rgba(141,224,111,.7); box-shadow:0 5px 14px rgba(0,0,0,.26),0 0 20px rgba(141,224,111,.12); }
-.flowCategoryIcon { grid-column:1/-1; align-self:start; width:38px; height:38px; display:grid; place-items:center; color:var(--accent); filter:drop-shadow(0 0 7px rgba(141,224,111,.1)); }
-.flowCategoryIcon svg { width:33px; height:33px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-.flowCategoryCopy { min-width:0; display:grid; gap:5px; align-self:end; }
-.flowCategoryCopy strong { min-width:0; font-size:17px; line-height:1.05; font-weight:950; white-space:nowrap; letter-spacing:0; }
-.flowCategoryCopy small { color:#9da6ad; font-size:12px; line-height:1.1; font-weight:750; }
-.flowCategoryArrow { justify-self:end; align-self:end; color:#9aa4ab; }
-.flowCategoryArrow svg { width:20px; height:20px; }
-.flowCategoryCard[data-flow-id="morgen"] .flowCategoryCopy strong { font-size:14px; }
+.flowBrand { color:#91f65c; font-size:13px; line-height:1; font-weight:1000; white-space:nowrap; }
+.flowSelectionHeader h2 { font-size:44px; line-height:1.02; font-weight:1000; }
+.flowSubtitle { margin-top:13px; color:#aeb7bc; font-size:18px; line-height:1.2; font-weight:650; }
+.flowCategoryGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.flowCategoryCard { position:relative; isolation:isolate; overflow:hidden; min-width:0; aspect-ratio:2.06/1; min-height:0; display:grid; grid-template-columns:66px minmax(0,1fr) 34px; align-items:center; gap:8px; color:var(--text); background:radial-gradient(circle at 4% 0,rgba(141,224,111,.14),transparent 31%),radial-gradient(circle at 82% 62%,rgba(141,224,111,.04),transparent 34%),linear-gradient(145deg,#11191e,#071013 82%); border:1px solid #2a383e; border-radius:8px; padding:13px 10px; text-align:left; box-shadow:0 12px 28px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.025); cursor:pointer; transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background-color .18s ease; -webkit-tap-highlight-color:transparent; }
+.flowCategoryCard::before { content:""; position:absolute; z-index:-1; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,#b6ff82 0,var(--accent) 36%,rgba(141,224,111,.18) 76%,transparent); box-shadow:0 2px 12px rgba(141,224,111,.22); }
+.flowCategoryCard::after { content:""; position:absolute; z-index:-1; width:100px; height:100px; right:28px; bottom:-52px; border:1px solid rgba(141,224,111,.045); border-radius:50%; box-shadow:0 0 0 18px rgba(141,224,111,.018),0 0 0 36px rgba(141,224,111,.012); }
+.flowCategoryCard:hover,.flowCategoryCard:focus-visible,.flowCategoryCard.isSelected { transform:translateY(-2px); border-color:rgba(141,224,111,.58); box-shadow:0 16px 32px rgba(0,0,0,.34),0 0 22px rgba(141,224,111,.09),inset 0 1px 0 rgba(255,255,255,.04); outline:0; }
+.flowCategoryCard:active { transform:scale(.982); border-color:rgba(141,224,111,.8); box-shadow:0 6px 16px rgba(0,0,0,.3),0 0 24px rgba(141,224,111,.16); }
+.flowCategoryBackdrop { position:absolute; z-index:-1; width:112px; height:112px; right:20px; bottom:-24px; display:grid; place-items:center; color:#8ee65f; opacity:.045; transform:rotate(-7deg); }
+.flowCategoryBackdrop svg { width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:1.25; }
+.flowCategoryIcon { position:relative; z-index:1; width:66px; height:66px; display:grid; place-items:center; color:#9cff65; border:1px solid rgba(141,224,111,.2); border-radius:50%; background:radial-gradient(circle at 38% 28%,rgba(141,224,111,.16),rgba(6,18,13,.6) 68%); box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 0 18px rgba(141,224,111,.07); filter:drop-shadow(0 0 7px rgba(141,224,111,.24)); }
+.flowCategoryIcon::after { content:""; position:absolute; z-index:-1; width:54px; height:54px; border-radius:50%; background:radial-gradient(circle,rgba(141,224,111,.1),transparent 68%); }
+.flowCategoryIcon svg { width:43px; height:43px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.flowCategoryCopy { position:relative; z-index:1; min-width:0; display:grid; gap:7px; }
+.flowCategoryCopy strong { min-width:0; font-size:18px; line-height:1.05; font-weight:950; white-space:nowrap; letter-spacing:0; }
+.flowCategoryCopy small { color:#a9b1b7; font-size:12px; line-height:1.1; font-weight:750; }
+.flowCategoryArrow { position:relative; z-index:1; width:36px; height:36px; display:grid; place-items:center; justify-self:end; color:#9cff65; border:1px solid rgba(141,224,111,.48); border-radius:50%; background:rgba(7,14,17,.72); box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 0 10px rgba(141,224,111,.06); }
+.flowCategoryArrow svg { width:22px; height:22px; }
+.flowCategoryCard[data-flow-id="morgen"] .flowCategoryCopy strong { font-size:15px; }
 body.lightMode.flowSelectionActive { background:#f4f6f3; }
 body.lightMode .flowCategoryCard { background:#fff; border-color:var(--line); box-shadow:0 10px 24px rgba(28,45,31,.08); }
 body.lightMode .flowSubtitle,body.lightMode .flowCategoryCopy small { color:var(--muted); }
-@media (max-width:380px) { body.flowSelectionActive .app { padding:12px 12px 24px; } .flowSelectionHeader { margin-bottom:16px; } .flowSelectionHeader h2 { font-size:31px; } .flowCategoryGrid { gap:7px; } .flowCategoryCard { min-height:108px; padding:11px 9px 9px; } .flowCategoryCopy strong { font-size:16px; } .flowCategoryCard[data-flow-id="morgen"] .flowCategoryCopy strong { font-size:13px; } .flowCategoryCopy small { font-size:11px; } }
+@media (max-width:420px) { body.flowSelectionActive .app { padding:12px 14px 24px; } .flowSelectionHeader { margin-bottom:22px; padding-top:20px; } .flowHeaderBar { margin-bottom:18px; } .flowInfo { width:40px; height:40px; } .flowSelectionHeader h2 { font-size:40px; } .flowSubtitle { margin-top:10px; font-size:17px; } .flowCategoryGrid { gap:9px 10px; } .flowCategoryCard { grid-template-columns:49px minmax(0,1fr) 26px; gap:4px; padding:9px 7px; } .flowCategoryIcon { width:49px; height:49px; } .flowCategoryIcon svg { width:32px; height:32px; } .flowCategoryBackdrop { width:86px; height:86px; right:10px; bottom:-22px; } .flowCategoryArrow { width:26px; height:26px; } .flowCategoryArrow svg { width:16px; height:16px; } .flowCategoryCopy strong { font-size:15px; } .flowCategoryCard[data-flow-id="kroppsvekt"] .flowCategoryCopy strong { font-size:12px; } .flowCategoryCard[data-flow-id="morgen"] .flowCategoryCopy strong { font-size:10px; } .flowCategoryCopy small { font-size:11px; } }
 
 .globalHome { display:inline-flex; align-items:center; gap:8px; }
 .startPlay { width:19px; height:19px; fill:none; stroke:var(--accent); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }

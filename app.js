@@ -364,9 +364,9 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         view.innerHTML=`<div class="section"><h2>${tabs.find(t=>t[0]===cat)[1]}</h2></div>${tpl?`<div class="cards">${tpl}</div>`:""}${groupHtml?`<div class="cards">${groupHtml}</div>`:""}`;
         bindCommon();
       }
-      const flowIcons={push:`<path d="M3 10v4M6 8v8M18 8v8M21 10v4M6 12h12"/>`,pull:`<path d="M4 5h16M6 3v4M18 3v4"/><circle cx="12" cy="9" r="2"/><path d="M8 8c0 3 1 4 4 4s4-1 4-4M9 21l3-9 3 9"/>`,fullbody:`<circle cx="12" cy="4" r="2"/><path d="M12 6v7M6 9l6 2 6-2M8 21l4-8 4 8"/>`,crosstrening:`<path d="m13 2-8 12h7l-1 8 8-12h-7z"/>`,kroppsvekt:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6M5 9l7 3 7-3M8 21l4-9 4 9"/>`,tabata:`<circle cx="12" cy="13" r="8"/><path d="M9 2h6M12 5v3M12 13l3-2"/>`,core:`<path d="M8 3c-2 3-2 6 0 9-2 3-1 7 2 9M16 3c2 3 2 6 0 9 2 3 1 7-2 9M8 8h8M8 16h8"/>`,morgen:`<path d="M4 18h16M6 15a6 6 0 0 1 12 0M12 3v4M4.9 7.9l2.8 2.8M19.1 7.9l-2.8 2.8"/>`,toying:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6l-5 4M12 10l5 3M7 16l-2 5M17 13l2 8"/>`,nodokt:`<path d="M12 3 2.8 20h18.4zM12 9v5M12 17h.01"/>`};
+      const flowIcons={push:`<path d="M3 10v4M6 8v8M18 8v8M21 10v4M6 12h12"/>`,pull:`<path d="M4 5h16M6 3v4M18 3v4"/><circle cx="12" cy="9" r="2"/><path d="M8 8c0 3 1 4 4 4s4-1 4-4M9 21l3-9 3 9"/>`,fullbody:`<circle cx="12" cy="4" r="2"/><path d="M12 6v7M6 9l6 2 6-2M8 21l4-8 4 8"/>`,crosstrening:`<path d="m13 2-8 12h7l-1 8 8-12h-7z"/>`,kroppsvekt:`<circle cx="18.5" cy="8" r="1.7"/><path d="M4 18h4l2.2-5.2 4.1 1.4 2.2 3.8H21M8 18l-2.5-4.5M10.2 12.8l2.3-3.3 4.3.8"/>`,tabata:`<circle cx="12" cy="13" r="8"/><path d="M9 2h6M12 5v3M12 13l3-2"/>`,core:`<path d="M8 3c-2 3-2 6 0 9-2 3-1 7 2 9M16 3c2 3 2 6 0 9 2 3 1 7-2 9M8 8h8M8 16h8"/>`,morgen:`<path d="M4 18h16M6 15a6 6 0 0 1 12 0M12 3v4M4.9 7.9l2.8 2.8M19.1 7.9l-2.8 2.8"/>`,toying:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6l-5 4M12 10l5 3M7 16l-2 5M17 13l2 8"/>`,nodokt:`<path d="M12 3 2.8 20h18.4zM12 9v5M12 17h.01"/>`};
       const flowIcon=id=>`<svg viewBox="0 0 24 24" aria-hidden="true">${flowIcons[id]||flowIcons.fullbody}</svg>`;
-      const flowSelectionHeader=title=>`<header class="flowSelectionHeader"><p class="flowBrand">TRENINGSBUDDY</p><h2>${title}</h2><p class="flowSubtitle">Velg treningsform</p></header>`;
+      const flowSelectionHeader=title=>{const subtitle=title==="Maler"?"Velg treningsmal":title==="Favorittøkter"?"Dine lagrede økter":"Velg treningsform";return `<header class="flowSelectionHeader"><div class="flowHeaderBar"><p class="flowBrand">TRENINGSBUDDY</p><span class="flowInfo" aria-label="Informasjon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg></span></div><h2>${title}</h2><p class="flowSubtitle">${subtitle}</p></header>`;};
       function TrainingCategoryCard({id,title,subtitle,icon,selected=false,onClick}) {
         const button=document.createElement("button");
         button.type="button";
@@ -374,7 +374,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         button.dataset.flowId=id;
         button.setAttribute("aria-label",`${title}, ${subtitle}`);
         if(selected)button.setAttribute("aria-current","true");
-        button.innerHTML=`<span class="flowCategoryIcon">${icon||flowIcon(id)}</span><span class="flowCategoryCopy"><strong>${title}</strong><small>${subtitle}</small></span><span class="flowCategoryArrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>`;
+        button.innerHTML=`<span class="flowCategoryBackdrop" aria-hidden="true">${icon||flowIcon(id)}</span><span class="flowCategoryIcon">${icon||flowIcon(id)}</span><span class="flowCategoryCopy"><strong>${title}</strong><small>${subtitle}</small></span><span class="flowCategoryArrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span>`;
         if(typeof onClick==="function")button.addEventListener("click",onClick);
         return button;
       }
@@ -686,7 +686,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         if(round&&active){const total=Number(state.builder[active.index]?.rounds)||1;round.textContent=`Runde ${Math.min(active.round,total)} av ${total}`;}
       }
       setInterval(updateCountdowns,1000);
-      if("serviceWorker" in navigator&&!['localhost','127.0.0.1'].includes(location.hostname)){let reloadingForUpdate=false;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloadingForUpdate)return;reloadingForUpdate=true;location.reload();});navigator.serviceWorker.register("./sw.js?v=125",{updateViaCache:"none"}).then(registration=>registration.update()).catch(()=>{});}
+      if("serviceWorker" in navigator&&!['localhost','127.0.0.1'].includes(location.hostname)){let reloadingForUpdate=false;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloadingForUpdate)return;reloadingForUpdate=true;location.reload();});navigator.serviceWorker.register("./sw.js?v=132",{updateViaCache:"none"}).then(registration=>registration.update()).catch(()=>{});}
       migrateTemplateFavorites();
       migrateFavoriteWorkoutStructure();
       render();
