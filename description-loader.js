@@ -1,6 +1,6 @@
 (async()=>{
   try{
-    const response=await fetch("./exerciseDescriptions.json?v=132");
+    const response=await fetch("./exerciseDescriptions.json?v=147");
     if(!response.ok)throw new Error(`HTTP ${response.status}`);
     const records=await response.json();
     window.TRENINGSBUDDY_EXERCISE_DETAILS=Object.fromEntries(records.map(record=>{
@@ -10,7 +10,7 @@
         steps:Array.isArray(description.steps)?description.steps:[],
         breathing:description.breathing||"",
         technique:Array.isArray(description.technique)?description.technique:[],
-        mistakes:(description.mistakes||[]).map(item=>`Feil: ${item.mistake}\nKorrigering: ${item.correction}`)
+        mistakes:(description.mistakes||[]).map(item=>item.correction?`Feil: ${item.mistake}\nKorrigering: ${item.correction}`:`Feil: ${item.mistake}`)
       }];
     }));
   }catch(error){
@@ -18,7 +18,7 @@
     console.warn("Øvelsesbeskrivelser kunne ikke lastes.",error);
   }finally{
     const script=document.createElement("script");
-    script.src="./app.js?v=132";
+    script.src="./app.js?v=147";
     document.body.appendChild(script);
   }
 })();

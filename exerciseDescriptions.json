@@ -8322,5 +8322,467 @@
         }
       ]
     }
+  },
+  {
+    "id": "Kettlebell Clean And Jerk",
+    "description": {
+      "startPosition": "Stå med kettlebellen mellom føttene.",
+      "steps": [
+        "Sving kettlebellen til rack-posisjon.",
+        "Dypp lett i knærne.",
+        "Strekk eksplosivt ut og press kettlebellen over hodet.",
+        "Senk kontrollert tilbake."
+      ],
+      "breathing": "Pust ut når kettlebellen drives over hodet.",
+      "technique": [
+        "Bruk kraft fra hoftene.",
+        "Hold kjernen stram.",
+        "Lås ut armen på toppen."
+      ],
+      "mistakes": [
+        { "mistake": "Presser kun med armen.", "correction": "" },
+        { "mistake": "Overstrekk i korsryggen.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Corkscrew",
+    "description": {
+      "startPosition": "Sitt med lett bøyde knær og kettlebellen foran kroppen.",
+      "steps": [
+        "Len overkroppen lett bak.",
+        "Roter kettlebellen rundt kroppen.",
+        "Hold hoftene stabile.",
+        "Bytt retning etter ønsket antall repetisjoner."
+      ],
+      "breathing": "Pust rolig gjennom bevegelsen.",
+      "technique": [
+        "Hold brystet oppe.",
+        "Stram kjernen.",
+        "Beveg deg kontrollert."
+      ],
+      "mistakes": [
+        { "mistake": "Roterer hele kroppen.", "correction": "" },
+        { "mistake": "For høy hastighet.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Diagonal Snatch",
+    "description": {
+      "startPosition": "Plasser kettlebellen ved utsiden av motsatt fot.",
+      "steps": [
+        "Bøy i hofter og knær.",
+        "Strekk eksplosivt.",
+        "Før kettlebellen diagonalt opp.",
+        "Fang den over hodet."
+      ],
+      "breathing": "Pust ut under løftet.",
+      "technique": [
+        "Bruk hoftekraft.",
+        "Hold kettlebellen nær kroppen.",
+        "Stabiliser skulderen."
+      ],
+      "mistakes": [
+        { "mistake": "Trekker kun med armen.", "correction": "" },
+        { "mistake": "Mangler hofteekstensjon.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Drag Snatch",
+    "description": {
+      "startPosition": "Stå med kettlebellen mellom føttene.",
+      "steps": [
+        "Skyv hoftene bak.",
+        "Dra kettlebellen tett langs kroppen.",
+        "Fang den over hodet.",
+        "Senk kontrollert."
+      ],
+      "breathing": "Pust ut under løftet.",
+      "technique": [
+        "Hold ryggen nøytral.",
+        "Bruk hoftene.",
+        "Lås albuen på toppen."
+      ],
+      "mistakes": [
+        { "mistake": "Lar kettlebellen svinge ut.", "correction": "" },
+        { "mistake": "Trekker bare med armen.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Figure Eight",
+    "description": {
+      "startPosition": "Stå bredt med lett bøyde knær.",
+      "steps": [
+        "Før kettlebellen mellom beina.",
+        "Bytt hånd bak kroppen.",
+        "Før den rundt utsiden.",
+        "Gjenta i et flytende mønster."
+      ],
+      "breathing": "Pust jevnt gjennom øvelsen.",
+      "technique": [
+        "Hold ryggen rett.",
+        "Bruk hoftehengsel.",
+        "Se frem."
+      ],
+      "mistakes": [
+        { "mistake": "Runder ryggen.", "correction": "" },
+        { "mistake": "Mister kontroll ved håndbytte.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Forward Lunge",
+    "description": {
+      "startPosition": "Hold kettlebellen foran brystet.",
+      "steps": [
+        "Ta et langt steg frem.",
+        "Senk kroppen til begge knær er bøyd.",
+        "Press fra fremre fot tilbake.",
+        "Bytt bein."
+      ],
+      "breathing": "Pust ut når du reiser deg.",
+      "technique": [
+        "Hold overkroppen oppreist.",
+        "Kne følger tærne.",
+        "Stram kjernen."
+      ],
+      "mistakes": [
+        { "mistake": "For korte steg.", "correction": "" },
+        { "mistake": "Faller fremover.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Forward Lunge With Press",
+    "description": {
+      "startPosition": "Hold kettlebellen i rack-posisjon.",
+      "steps": [
+        "Ta et steg frem.",
+        "Senk ned i utfall.",
+        "Press kettlebellen over hodet når du reiser deg.",
+        "Gå tilbake og bytt bein."
+      ],
+      "breathing": "Pust ut under presset.",
+      "technique": [
+        "Stabil kjerne.",
+        "Kontroller balansen.",
+        "Press rett opp."
+      ],
+      "mistakes": [
+        { "mistake": "Mister balansen.", "correction": "" },
+        { "mistake": "Presser før du er oppe.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Get-Up Sit-Up",
+    "description": {
+      "startPosition": "Ligg på ryggen med kettlebellen over én skulder.",
+      "steps": [
+        "Hold kettlebellen rett opp.",
+        "Utfør en kontrollert sit-up.",
+        "Senk rolig ned.",
+        "Gjenta."
+      ],
+      "breathing": "Pust ut på vei opp.",
+      "technique": [
+        "Hold armen loddrett.",
+        "Se mot kettlebellen.",
+        "Stram kjernen."
+      ],
+      "mistakes": [
+        { "mistake": "Bøyer armen.", "correction": "" },
+        { "mistake": "Mister skulderstabiliteten.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Iron Cross",
+    "description": {
+      "startPosition": "Stå med kettlebellen i rack-posisjon.",
+      "steps": [
+        "Press kettlebellen over hodet.",
+        "Senk kontrollert ut til siden.",
+        "Før den tilbake til start.",
+        "Bytt arm etter ønsket antall repetisjoner."
+      ],
+      "breathing": "Pust ut under presset.",
+      "technique": [
+        "Hold kjernen stram.",
+        "Beveg skulderen kontrollert.",
+        "Unngå å lene kroppen."
+      ],
+      "mistakes": [
+        { "mistake": "Bruker for tung vekt.", "correction": "" },
+        { "mistake": "Kompenserer med overkroppen.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Jerk",
+    "description": {
+      "startPosition": "Hold kettlebellen i rack-posisjon.",
+      "steps": [
+        "Dypp lett i knærne.",
+        "Strekk eksplosivt ut.",
+        "Fang kettlebellen over hodet.",
+        "Senk kontrollert tilbake."
+      ],
+      "breathing": "Pust ut når kettlebellen drives opp.",
+      "technique": [
+        "Bruk beina.",
+        "Hold håndleddet rett.",
+        "Stabiliser skulderen."
+      ],
+      "mistakes": [
+        { "mistake": "Presser kun med armen.", "correction": "" },
+        { "mistake": "For lite bendriv.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Lateral Swing",
+    "description": {
+      "startPosition": "Hold kettlebellen med begge hender foran kroppen.",
+      "steps": [
+        "Sving kettlebellen mot én side.",
+        "Før den kontrollert tilbake.",
+        "Sving til motsatt side.",
+        "Gjenta i jevn rytme."
+      ],
+      "breathing": "Pust ut ved hver sving.",
+      "technique": [
+        "Bruk hoftene.",
+        "Hold ryggen nøytral.",
+        "Stram kjernen."
+      ],
+      "mistakes": [
+        { "mistake": "Vrider korsryggen.", "correction": "" },
+        { "mistake": "Løfter med armene.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Overhead Squat",
+    "description": {
+      "startPosition": "Hold kettlebellen over hodet med strak arm.",
+      "steps": [
+        "Sett deg kontrollert ned i en knebøy.",
+        "Hold armen stabil over hodet.",
+        "Press opp igjen.",
+        "Gjenta."
+      ],
+      "breathing": "Pust ut når du reiser deg.",
+      "technique": [
+        "Hold brystet oppe.",
+        "Armen skal være låst.",
+        "Press knærne utover."
+      ],
+      "mistakes": [
+        { "mistake": "Armen faller frem.", "correction": "" },
+        { "mistake": "Mister nøytral rygg.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Row",
+    "description": {
+      "startPosition": "Støtt én hånd mot et stabilt underlag og hold kettlebellen i den andre.",
+      "steps": [
+        "Heng lett frem i hoften.",
+        "Trekk kettlebellen mot hoften.",
+        "Senk kontrollert.",
+        "Fullfør alle repetisjoner før du bytter side."
+      ],
+      "breathing": "Pust ut når du trekker.",
+      "technique": [
+        "Hold albuen tett inntil kroppen.",
+        "Stabil rygg.",
+        "Trekk skulderbladet bak."
+      ],
+      "mistakes": [
+        { "mistake": "Roterer overkroppen.", "correction": "" },
+        { "mistake": "Bruker for mye fart.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Russian Twist",
+    "description": {
+      "startPosition": "Sitt med lett bøyde knær og kettlebellen foran brystet.",
+      "steps": [
+        "Len overkroppen litt bak.",
+        "Roter til én side.",
+        "Roter videre til motsatt side.",
+        "Gjenta kontrollert."
+      ],
+      "breathing": "Pust rolig gjennom bevegelsen.",
+      "technique": [
+        "Hold kjernen aktiv.",
+        "Roter overkroppen.",
+        "Hold brystet oppe."
+      ],
+      "mistakes": [
+        { "mistake": "Beveger bare armene.", "correction": "" },
+        { "mistake": "Runder ryggen.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Side Bend",
+    "description": {
+      "startPosition": "Stå oppreist med kettlebellen i én hånd.",
+      "steps": [
+        "Len overkroppen rolig mot siden.",
+        "Senk så langt du har kontroll.",
+        "Reis deg tilbake.",
+        "Bytt side."
+      ],
+      "breathing": "Pust ut på vei opp.",
+      "technique": [
+        "Hold hoftene stabile.",
+        "Beveg kun overkroppen.",
+        "Stram kjernen."
+      ],
+      "mistakes": [
+        { "mistake": "Roterer kroppen.", "correction": "" },
+        { "mistake": "Bruker for tung vekt.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Sots Press",
+    "description": {
+      "startPosition": "Sitt i dyp knebøy med kettlebellen i rack-posisjon.",
+      "steps": [
+        "Hold hælene i gulvet.",
+        "Press kettlebellen rett over hodet.",
+        "Senk kontrollert tilbake til rack.",
+        "Fullfør alle repetisjoner før du bytter arm."
+      ],
+      "breathing": "Pust ut under presset.",
+      "technique": [
+        "Hold brystet oppe.",
+        "Stabiliser kjernen.",
+        "Press rett opp."
+      ],
+      "mistakes": [
+        { "mistake": "Reiser seg fra knebøyen.", "correction": "" },
+        { "mistake": "Armen presses fremover.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Sumo Deadlift",
+    "description": {
+      "startPosition": "Stå bredt med kettlebellen mellom føttene.",
+      "steps": [
+        "Skyv hoftene bak.",
+        "Grip kettlebellen med begge hender.",
+        "Press hoftene frem og reis deg opp.",
+        "Senk kontrollert tilbake."
+      ],
+      "breathing": "Pust ut når du reiser deg.",
+      "technique": [
+        "Hold ryggen nøytral.",
+        "Press knærne utover.",
+        "Løft med hofter og bein."
+      ],
+      "mistakes": [
+        { "mistake": "Runder ryggen.", "correction": "" },
+        { "mistake": "Løfter med armene.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Swing Squat",
+    "description": {
+      "startPosition": "Hold kettlebellen med begge hender foran kroppen.",
+      "steps": [
+        "Utfør en kettlebell swing.",
+        "Fang kettlebellen foran brystet.",
+        "Gå rett ned i en knebøy.",
+        "Reis deg og gjenta."
+      ],
+      "breathing": "Pust ut under svingen.",
+      "technique": [
+        "Bruk hoftene.",
+        "Hold brystet oppe.",
+        "Kontroller overgangen."
+      ],
+      "mistakes": [
+        { "mistake": "Løfter med armene.", "correction": "" },
+        { "mistake": "Mister rytmen.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Kettlebell Windmill",
+    "description": {
+      "startPosition": "Hold kettlebellen over hodet med strak arm.",
+      "steps": [
+        "Drei føttene lett ut.",
+        "Skyv hoften ut til siden.",
+        "Len overkroppen kontrollert ned.",
+        "Reis deg tilbake."
+      ],
+      "breathing": "Pust ut på vei opp.",
+      "technique": [
+        "Se mot kettlebellen.",
+        "Hold armen låst.",
+        "Beveg fra hoften."
+      ],
+      "mistakes": [
+        { "mistake": "Runder ryggen.", "correction": "" },
+        { "mistake": "Mister skulderstabiliteten.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Single-Arm Kettlebell Swing",
+    "description": {
+      "startPosition": "Hold kettlebellen i én hånd foran kroppen.",
+      "steps": [
+        "Skyv hoftene bak.",
+        "Sving kettlebellen eksplosivt til brysthøyde.",
+        "La den falle kontrollert tilbake.",
+        "Fullfør alle repetisjoner før du bytter arm."
+      ],
+      "breathing": "Pust ut under svingen.",
+      "technique": [
+        "Bruk hoftekraft.",
+        "Hold ryggen nøytral.",
+        "Armen fungerer som en krok."
+      ],
+      "mistakes": [
+        { "mistake": "Løfter med skulderen.", "correction": "" },
+        { "mistake": "Bøyer ryggen.", "correction": "" }
+      ]
+    }
+  },
+  {
+    "id": "Turkish Get-Up",
+    "description": {
+      "startPosition": "Ligg på ryggen med kettlebellen over én skulder.",
+      "steps": [
+        "Reis deg gradvis opp via albue og hånd.",
+        "Løft hoften og før beinet under kroppen.",
+        "Reis deg kontrollert til stående.",
+        "Gå rolig tilbake samme vei."
+      ],
+      "breathing": "Pust rolig gjennom hele bevegelsen.",
+      "technique": [
+        "Hold blikket på kettlebellen.",
+        "Armen skal være strak.",
+        "Kontroller hvert steg."
+      ],
+      "mistakes": [
+        { "mistake": "Skynder seg gjennom bevegelsen.", "correction": "" },
+        { "mistake": "Bøyer armen med kettlebellen.", "correction": "" }
+      ]
+    }
   }
 ]
