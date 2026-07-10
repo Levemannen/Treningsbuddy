@@ -1,5 +1,5 @@
-const CACHE_NAME = "treningsbuddy-flat-v153";
-const APP_SHELL = ["./", "./index.html", "./app.css", "./description-loader.js", "./exerciseDescriptions.json", "./app.js", "./icon.svg", "./manifest.webmanifest"];
+const CACHE_NAME = "treningsbuddy-flat-v154";
+const APP_SHELL = ["./", "./index.html", "./app.css", "./description-loader.js", "./exerciseDescriptions.json", "./app.js", "./assets/icons/favicon-32.png", "./assets/icons/apple-touch-icon.png", "./assets/icons/app-icon-192.png", "./assets/icons/app-icon-512.png", "./manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
