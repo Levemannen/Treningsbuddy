@@ -1,14 +1,18 @@
 ﻿{
-  "name": "treningsbuddy",
-  "short_name": "treningsbuddy",
+  "id": "./",
+  "name": "TreningsBuddy",
+  "short_name": "TreningsBuddy",
   "description": "En statisk treningsapp og øktbygger for styrke, historikk og rask logging.",
+  "lang": "no",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone"],
   "orientation": "portrait",
   "background_color": "#0a0d10",
   "theme_color": "#0a0d10",
   "categories": ["health", "fitness", "productivity"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "./assets/icons/treningsbuddy-pwa-icon-192.png",
@@ -33,6 +37,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "./assets/icons/treningsbuddy-pwa-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

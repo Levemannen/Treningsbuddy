@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="no">
   <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Oppdaterer Treningsbuddy</title></head>
   <body>
     <p>Oppdaterer Treningsbuddy...</p>
     <script>
-      const continueToApp = () => location.replace("./?v=167&updated=1");
+      const continueToApp = () => location.replace("./?v=170&updated=1");
       const fallback = setTimeout(continueToApp, 1500);
       Promise.allSettled([
         navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(items => Promise.allSettled(items.map(item => item.unregister()))) : Promise.resolve(),
