@@ -1,4 +1,4 @@
-const APP_VERSION = "163";
+const APP_VERSION = "167";
 const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],["settings","Innstillinger"]];
       const favorites = ["Deadlift","Landmine Press","Stangroing","Frontbøy","Floor Press","Inverted Rows","Pushups","Push Press","Shrugs","Bicepscurl","Triceps Extension","Planke/Rollout"];
       const equipment = ["Kroppsvekt","Manualer","Stang","Kabel","Maskin","Kettlebell","Strikk","TRX/slynger","Smith-maskin","Landmine","Medisinball","Annet","Benk","Pullupstang"];
@@ -405,7 +405,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
       }
       const flowIcons={push:`<path d="M3 10v4M6 8v8M18 8v8M21 10v4M6 12h12"/>`,pull:`<path d="M4 5h16M6 3v4M18 3v4"/><circle cx="12" cy="9" r="2"/><path d="M8 8c0 3 1 4 4 4s4-1 4-4M9 21l3-9 3 9"/>`,fullbody:`<circle cx="12" cy="4" r="2"/><path d="M12 6v7M6 9l6 2 6-2M8 21l4-8 4 8"/>`,crosstrening:`<path d="M8 7h8M9 7V5h6v2M7 9c-2 1-3 3-3 5a8 8 0 0 0 16 0c0-2-1-4-3-5M8 10v4M16 10v4"/>`,kroppsvekt:`<circle cx="18.5" cy="8" r="1.7"/><path d="M4 18h4l2.2-5.2 4.1 1.4 2.2 3.8H21M8 18l-2.5-4.5M10.2 12.8l2.3-3.3 4.3.8"/>`,tabata:`<circle cx="12" cy="13" r="8"/><path d="M9 2h6M12 5v3M12 13l3-2"/>`,core:`<path d="M8 3c-2 3-2 6 0 9-2 3-1 7 2 9M16 3c2 3 2 6 0 9 2 3 1 7-2 9M8 8h8M8 16h8"/>`,morgen:`<path d="M4 18h16M6 15a6 6 0 0 1 12 0M12 3v4M4.9 7.9l2.8 2.8M19.1 7.9l-2.8 2.8"/>`,toying:`<circle cx="12" cy="4" r="2"/><path d="M12 6v6l-5 4M12 10l5 3M7 16l-2 5M17 13l2 8"/>`,nodokt:`<path d="m13 2-8 12h7l-1 8 8-12h-7z"/>`};
       const flowIcon=id=>`<svg viewBox="0 0 24 24" aria-hidden="true">${flowIcons[id]||flowIcons.fullbody}</svg>`;
-      const flowSelectionHeader=title=>{const subtitle=title==="Maler"?"Velg treningsmal":title==="Favorittøkter"?"Dine lagrede økter":"Velg treningsform";return `<header class="flowSelectionHeader"><p class="flowBrand">TRENINGSBUDDY</p><h2>${title}</h2><p class="flowSubtitle">${subtitle}</p></header>`;};
+      const flowSelectionHeader=title=>{const subtitle=title==="Maler"?"Velg treningsmal":title==="Favorittøkter"?"Dine lagrede økter":"Velg treningsform";return `<header class="flowSelectionHeader"><div class="flowSelectionTitle"><p class="flowBrand">TRENINGSBUDDY</p><h2>${title}</h2><p class="flowSubtitle">${subtitle}</p></div><img class="flowSelectionLogo" src="./assets/logos/treningsbuddy-home-logo.png" alt="" aria-hidden="true" loading="eager" decoding="async"></header>`;};
       function TrainingCategoryCard({id,title,subtitle,icon,selected=false,onClick}) {
         const button=document.createElement("button");
         button.type="button";
@@ -791,7 +791,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         if(round&&active){const total=Number(state.builder[active.index]?.rounds)||1;round.textContent=`Runde ${Math.min(active.round,total)} av ${total}`;}
       }
       setInterval(updateCountdowns,1000);
-      if("serviceWorker" in navigator&&!['localhost','127.0.0.1'].includes(location.hostname)){let reloadingForUpdate=false;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloadingForUpdate)return;reloadingForUpdate=true;location.reload();});navigator.serviceWorker.register("./sw.js?v=163",{updateViaCache:"none"}).then(registration=>registration.update()).catch(()=>{});}
+      if("serviceWorker" in navigator&&!['localhost','127.0.0.1'].includes(location.hostname)){let reloadingForUpdate=false;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloadingForUpdate)return;reloadingForUpdate=true;location.reload();});navigator.serviceWorker.register("./sw.js?v=167",{updateViaCache:"none"}).then(registration=>registration.update()).catch(()=>{});}
       migrateTemplateFavorites();
       migrateFavoriteWorkoutStructure();
       render();
