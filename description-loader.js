@@ -1,6 +1,6 @@
 ﻿(async()=>{
   try{
-    const response=await fetch("./exerciseDescriptions.json?v=170");
+    const response=await fetch("./exerciseDescriptions.json?v=171");
     if(!response.ok)throw new Error(`HTTP ${response.status}`);
     const records=await response.json();
     window.TRENINGSBUDDY_EXERCISE_DETAILS=Object.fromEntries(records.map(record=>{
@@ -18,7 +18,7 @@
     console.warn("Øvelsesbeskrivelser kunne ikke lastes.",error);
   }finally{
     const script=document.createElement("script");
-    script.src="./app.js?v=170";
+    script.src="./app.js?v=171";
     document.body.appendChild(script);
   }
 })();

@@ -175,6 +175,8 @@
       body.focusModeActive .app { max-width:760px; padding:62px 10px 28px; }
       .focusScreen { display:grid; gap:14px; min-height:calc(100vh - 24px); border-color:rgba(152,200,48,.58); background:linear-gradient(180deg,rgba(152,200,48,.08),rgba(10,13,16,.98) 220px); touch-action:pan-y; }
       .focusTop { display:flex; align-items:center; justify-content:space-between; gap:10px; color:var(--muted); font-size:13px; font-weight:900; }
+      .focusTopActions { display:flex; align-items:center; gap:8px; }
+      .focusMenuButton { width:40px; min-width:40px; height:40px; min-height:40px; display:grid; place-items:center; padding:0; border-radius:8px; font-size:22px; line-height:1; }
       .focusHero { display:grid; gap:8px; text-align:center; padding:8px 0 2px; }
       .focusHero h1, .minimalFocus h1 { font-size:clamp(38px,10vw,76px); line-height:1; letter-spacing:0; overflow-wrap:anywhere; }
       .focusHero .exerciseName { color:var(--text); font-size:inherit; margin:0 auto; }
