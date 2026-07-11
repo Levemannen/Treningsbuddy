@@ -2,7 +2,7 @@
   "name": "treningsbuddy",
   "short_name": "treningsbuddy",
   "description": "En statisk treningsapp og øktbygger for styrke, historikk og rask logging.",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
@@ -11,25 +11,25 @@
   "categories": ["health", "fitness", "productivity"],
   "icons": [
     {
-      "src": "./assets/icons/app-icon-192.png",
+      "src": "./assets/icons/treningsbuddy-pwa-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./assets/icons/app-icon-512.png",
+      "src": "./assets/icons/treningsbuddy-pwa-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./assets/icons/app-icon-maskable-192.png",
+      "src": "./assets/icons/treningsbuddy-pwa-maskable-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "./assets/icons/app-icon-maskable-512.png",
+      "src": "./assets/icons/treningsbuddy-pwa-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

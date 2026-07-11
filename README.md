@@ -15,6 +15,8 @@ Last opp disse filene direkte i hovedmappen/root i GitHub-repositoryet:
 - `manifest.webmanifest`
 - `sw.js`
 - `README.md`
+- `assets/icons/`
+- `assets/logos/`
 
 Valgfritt:
 

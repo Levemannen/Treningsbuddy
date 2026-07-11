@@ -1,4 +1,4 @@
-const APP_VERSION = "162";
+const APP_VERSION = "163";
 const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],["settings","Innstillinger"]];
       const favorites = ["Deadlift","Landmine Press","Stangroing","Frontbøy","Floor Press","Inverted Rows","Pushups","Push Press","Shrugs","Bicepscurl","Triceps Extension","Planke/Rollout"];
       const equipment = ["Kroppsvekt","Manualer","Stang","Kabel","Maskin","Kettlebell","Strikk","TRX/slynger","Smith-maskin","Landmine","Medisinball","Annet","Benk","Pullupstang"];
@@ -791,7 +791,7 @@ const tabs = [["bank","Øvelser"],["templates","Maler"],["history","Historikk"],
         if(round&&active){const total=Number(state.builder[active.index]?.rounds)||1;round.textContent=`Runde ${Math.min(active.round,total)} av ${total}`;}
       }
       setInterval(updateCountdowns,1000);
-      if("serviceWorker" in navigator&&!['localhost','127.0.0.1'].includes(location.hostname)){let reloadingForUpdate=false;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloadingForUpdate)return;reloadingForUpdate=true;location.reload();});navigator.serviceWorker.register("./sw.js?v=162",{updateViaCache:"none"}).then(registration=>registration.update()).catch(()=>{});}
+      if("serviceWorker" in navigator&&!['localhost','127.0.0.1'].includes(location.hostname)){let reloadingForUpdate=false;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(reloadingForUpdate)return;reloadingForUpdate=true;location.reload();});navigator.serviceWorker.register("./sw.js?v=163",{updateViaCache:"none"}).then(registration=>registration.update()).catch(()=>{});}
       migrateTemplateFavorites();
       migrateFavoriteWorkoutStructure();
       render();
