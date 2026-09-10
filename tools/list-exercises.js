@@ -2,9 +2,11 @@ const fs = require("fs");
 const vm = require("vm");
 
 require("../exercise-registry.js");
+require("../warmup-engine.js");
 global.window = {
   TreningsbuddyWorkoutCategories: require("../workout-categories.js"),
   TreningsbuddyExerciseRegistry: global.TreningsbuddyExerciseRegistry,
+  TreningsbuddyWarmupEngine: global.TreningsbuddyWarmupEngine,
 };
 global.document = { addEventListener: (_event, callback) => callback() };
 
