@@ -10,10 +10,14 @@ const meta={
 const getMeta=name=>meta[name];
 const names=workout=>engine.generate(workout.map(name=>({name})),getMeta).map(step=>step.name);
 const legs=names(["Knebøy"]),push=names(["Benkpress"]),pull=names(["Nedtrekk"]),full=names(["Knebøy","Benkpress","Planke"]);
-assert.ok(legs.includes("Ankelmobilitet")&&legs.includes("Knebøy med kroppsvekt"));
-assert.ok(push.includes("Armsirkler og skulderblad")&&push.includes("Scapula push-ups"));
-assert.ok(pull.includes("Brystryggrotasjon")&&pull.includes("Lette skulderbladstrekk"));
-assert.ok(full.includes("Ankelmobilitet")&&full.includes("Armsirkler og skulderblad"));
+assert.ok(legs.includes("Ankle Rocks")&&legs.includes("Air Squats"));
+assert.ok(push.includes("Arm Circles")&&push.includes("Scapula Push-ups"));
+assert.ok(pull.includes("Thoracic Rotation")&&pull.includes("Scapular Retractions"));
+assert.ok(full.includes("Ankle Rocks")&&full.includes("Arm Circles"));
 assert.notDeepEqual(legs,push);
 assert.ok(legs.length<=6&&push.length<=6&&full.length<=6);
+assert.equal(legs[0],"Marsj på stedet");
+assert.equal(legs.at(-1),"Lett Knebøy");
+assert.equal(push.at(-1),"Lett Benkpress");
+assert.ok(engine.generate([{name:"Knebøy"}],getMeta).every(step=>step.reason&&!/pulsøkning/i.test(step.name)));
 console.log("Oppvarmingsmotor: alle tester bestått");
